@@ -99,4 +99,64 @@ class BitSetTests {
             DiscordBitSet(0b1011, 0b111001, 0b110).binary,
         )
     }
+
+    @Test
+    fun equals_works() {
+        var a = bitSetOf(0, 0, 1, 4, 80, -13, 32, 0, 0)
+        var b = bitSetOf(0, 0, 1, 4, 80, -13, 32)
+        assertEquals(a, b)
+
+        a = bitSetOf()
+        b = bitSetOf(0, 0, 0)
+        assertEquals(a, b)
+
+        a = bitSetOf(1, 2, 3)
+        b = bitSetOf(3, 2, 1)
+        assertNotEquals(a, b)
+    }
+
+    @Test
+    fun BitSet_with_trailing_zeros_has_same_hashCode_as_equal_BitSet_without_trailing_zeros() {
+        val trailingZeros = bitSetOf(0, 0, 1, 4, 80, -13, 32, 0, 0)
+        val noTrailingZeros = bitSetOf(0, 0, 1, 4, 80, -13, 32)
+
+        assertEquals(trailingZeros, noTrailingZeros)
+        assertEquals(trailingZeros.hashCode(), noTrailingZeros.hashCode())
+    }
+
+    @Test
+    fun value_works() {
+        val smallBits = bitSetOf(13)
+        assertEquals("13", smallBits.value)
+
+        val largeBits = bitSetOf(
+            0b00010001010011011001000110011010,
+            0b01100010110001011001001000100101,
+            0b00100000010111111110100010110011,
+        )
+        assertEquals("10019467165254902396520075674", largeBits.value)
+
+        val zeros = bitSetOf(0, 0, 0)
+        assertEquals("0", zeros.value)
+    }
+
+    @Test
+    fun binary_works() {
+        val smallBits = bitSetOf(13)
+        assertEquals("1101", smallBits.binary)
+
+        val largeBits = bitSetOf(
+            0b00010001010011011001000110011010,
+            0b01100010110001011001001000100101,
+            0b00100000010111111110100010110011,
+        )
+        assertEquals(
+            "001000000101111111101000101100110110001011000101100100100010010100010001010011011001000110011010"
+                .trimStart('0'),
+            largeBits.binary,
+        )
+
+        val zeros = bitSetOf(0, 0, 0)
+        assertEquals("0", zeros.binary)
+    }
 }
