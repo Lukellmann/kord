@@ -94,10 +94,14 @@ public data class DiscordAuditLog(
     val applicationCommands: List<DiscordApplicationCommand>,
     @SerialName("audit_log_entries")
     val auditLogEntries: List<DiscordAuditLogEntry>,
+    @SerialName("guild_scheduled_events")
+    val guildScheduledEvents: List<DiscordGuildScheduledEvent>,
     @SerialName("auto_moderation_rules")
     val autoModerationRules: List<DiscordAutoModerationRule>,
     val integrations: List<DiscordPartialIntegration>,
-    val threads: List<DiscordChannel>
+    val threads: List<DiscordChannel>,
+    val users: List<DiscordUser>,
+    val webhooks: List<DiscordWebhook>,
 )
 
 @Serializable
@@ -106,7 +110,7 @@ public data class DiscordAuditLogEntry(
     val targetId: Snowflake?,
     val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
     @SerialName("user_id")
-    val userId: Snowflake,
+    val userId: Snowflake?,
     val id: Snowflake,
     @SerialName("action_type")
     val actionType: AuditLogEvent,
@@ -120,6 +124,10 @@ public data class DiscordAuditLogEntry(
 
 }
 
+/*
+Do not trust the docs:
+2020-11-12 (still true on 2022-03-09) all fields are described as present but are in fact optional
+ */
 @Serializable
 public data class AuditLogEntryOptionalInfo(
     @SerialName("application_id")
@@ -128,51 +136,19 @@ public data class AuditLogEntryOptionalInfo(
     val autoModerationRuleName: Optional<String> = Optional.Missing(),
     @SerialName("auto_moderation_rule_trigger_type")
     val autoModerationRuleTriggerType: Optional<String> = Optional.Missing(),
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
-    @SerialName("delete_member_days")
-    val deleteMemberDays: Optional<String> = Optional.Missing(),
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
-    @SerialName("members_removed")
-    val membersRemoved: Optional<String> = Optional.Missing(),
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
+    val count: Optional<String> = Optional.Missing(),
+    @SerialName("delete_member_days")
+    val deleteMemberDays: Optional<String> = Optional.Missing(),
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("members_removed")
+    val membersRemoved: Optional<String> = Optional.Missing(),
     @SerialName("message_id")
     val messageId: OptionalSnowflake = OptionalSnowflake.Missing,
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
-    val count: Optional<String> = Optional.Missing(),
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
-    val id: OptionalSnowflake = OptionalSnowflake.Missing,
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
-    val type: Optional<OverwriteType> = Optional.Missing(),
-    /*
-    Do not trust the docs:
-    2020-11-12 field is described as present but is in fact optional
-     */
     @SerialName("role_name")
-    val roleName: Optional<String> = Optional.Missing()
+    val roleName: Optional<String> = Optional.Missing(),
+    val type: Optional<OverwriteType> = Optional.Missing(),
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)
