@@ -123,5 +123,6 @@
   ],
   "application_commands": [],
   "auto_moderation_rules": [],
-  "threads" : []
+  "threads" : [],
+  "guild_scheduled_events": []
 }
