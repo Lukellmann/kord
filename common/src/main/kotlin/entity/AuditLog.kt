@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -10,10 +11,12 @@ import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.int
 import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
-import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
 import dev.kord.common.entity.MFALevel as CommonMFALevel
 import dev.kord.common.entity.Permissions as CommonPermissions
@@ -136,101 +139,192 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
 
     public class Unknown(name: String) : AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
 
-    public object Name : AuditLogChangeKey<String>("name", serializer())
-
-    public object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
-
-    public object ImageHash : AuditLogChangeKey<String>("image_hash", serializer())
-
-    public object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
-
-    public object OwnerId : AuditLogChangeKey<Snowflake>("owner_id", serializer())
-
-    public object Region : AuditLogChangeKey<String>("region", serializer())
-
+    /** Afk channel changed. */
     public object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
 
+    /** Afk timeout duration changed. */
     public object AfkTimeout : AuditLogChangeKey<Duration>("afk_timeout", DurationInSecondsSerializer)
 
-    public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
+    /** A permission on a text or voice channel was allowed for a role. */
+    public object Allow : AuditLogChangeKey<CommonPermissions>("allow", serializer())
 
-    public object VerificationLevel : AuditLogChangeKey<CommonVerificationLevel>("verification_level", serializer())
+    /** Application id of the added or removed webhook or bot. */
+    public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
 
+    /** Thread is now archived/unarchived. */
+    public object Archived : AuditLogChangeKey<Boolean>("archived", serializer())
+
+    /** Auto archive duration changed. */
+    public object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
+
+    /** Availability of sticker changed. */
+    public object Available : AuditLogChangeKey<Boolean>("available", serializer())
+
+    /** User avatar changed. */
+    public object AvatarHash : AuditLogChangeKey<String>("avatar_hash", serializer())
+
+    /** Guild banner changed. */
+    public object BannerHash : AuditLogChangeKey<String>("banner_hash", serializer())
+
+    /** Voice channel bitrate changed. */
+    public object Bitrate : AuditLogChangeKey<Int>("bitrate", serializer())
+
+    /** Channel for invite code or guild scheduled event changed. */
+    public object ChannelId : AuditLogChangeKey<Snowflake>("channel_id", serializer())
+
+    /** Invite code changed. */
+    public object Code : AuditLogChangeKey<String>("code", serializer())
+
+    /** Role color changed. */
+    public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
+
+    /** Member timeout state changed. */
+    public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
+
+    /**	User server deafened/undeafened. */
+    public object Deaf : AuditLogChangeKey<Boolean>("deaf", serializer())
+
+    /** Default auto archive duration for newly created threads changed. */
+    public object DefaultAutoArchiveDuration :
+        AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
+
+    /** Default message notification level changed. */
+    public object DefaultMessageNotifications :
+        AuditLogChangeKey<DefaultMessageNotificationLevel>("default_message_notifications", serializer())
+
+    /** A permission on a text or voice channel was denied for a role. */
+    public object Deny : AuditLogChangeKey<CommonPermissions>("deny", serializer())
+
+    /** Description changed. */
+    public object Description : AuditLogChangeKey<String>("description", serializer())
+
+    /** Discovery splash changed. */
+    public object DiscoverySplashHash : AuditLogChangeKey<String>("discovery_splash_hash", serializer())
+
+    /** Integration emoticons enabled/disabled. */
+    public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
+
+    /**	Entity type of guild scheduled event was changed. */
+    public object EntityType : AuditLogChangeKey<ScheduledEntityType>("entity_type", serializer())
+
+    /** Integration expiring subscriber behavior changed. */
+    public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
+
+    /** Integration expire grace period changed. */
+    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInDaysSerializer)
+
+    /** Change in whose messages are scanned and deleted for explicit content in the server. */
     public object ExplicitContentFilter :
         AuditLogChangeKey<CommonExplicitContentFilter>("explicit_content_filter", serializer())
 
-    public object DefaultMessageNotificationLevel :
-        AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
+    /** Format type of sticker changed. */
+    public object FormatType : AuditLogChangeKey<MessageStickerType>("format_type", serializer())
 
-    public object VanityUrlCode : AuditLogChangeKey<String>("vanity_url_code", serializer())
+    /** Guild sticker is in changed. */
+    public object GuildId : AuditLogChangeKey<Snowflake>("guild_id", serializer())
 
-    public object Add : AuditLogChangeKey<List<DiscordPartialRole>>("\$add", serializer())
-
-    public object Remove : AuditLogChangeKey<List<DiscordPartialRole>>("\$remove", serializer())
-
-    public object PruneDeleteDays : AuditLogChangeKey<Int>("prune_delete_days", serializer())
-
-    public object WidgetEnabled : AuditLogChangeKey<Boolean>("widget_enabled", serializer())
-
-    public object WidgetChannelId : AuditLogChangeKey<Snowflake>("widget_channel_id", serializer())
-
-    public object SystemChannelId : AuditLogChangeKey<Snowflake>("system_channel_id", serializer())
-
-    public object Position : AuditLogChangeKey<Int>("position", serializer())
-
-    public object Topic : AuditLogChangeKey<String>("topic", serializer())
-
-    public object Bitrate : AuditLogChangeKey<Int>("bitrate", serializer())
-
-    public object PermissionOverwrites : AuditLogChangeKey<List<Overwrite>>("permission_overwrites", serializer())
-
-    public object Nsfw : AuditLogChangeKey<Boolean>("nsfw", serializer())
-
-    public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
-
-    public object RateLimitPerUser : AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInSecondsSerializer)
-
-    public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
-
-    public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
-
-    public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
-
+    /** Role is now displayed/no longer displayed separate from online users. */
     public object Hoist : AuditLogChangeKey<Boolean>("hoist", serializer())
 
-    public object Mentionable : AuditLogChangeKey<Boolean>("mentionable", serializer())
+    /** Icon changed. */
+    public object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
 
-    public object Allow : AuditLogChangeKey<CommonPermissions>("allow", serializer())
+    /** Guild scheduled event cover image changed. */
+    public object ImageHash : AuditLogChangeKey<String>("image_hash", serializer())
 
-    public object Deny : AuditLogChangeKey<CommonPermissions>("deny", serializer())
-
-    public object Code : AuditLogChangeKey<String>("code", serializer())
-
-    public object ChannelId : AuditLogChangeKey<Snowflake>("channel_id", serializer())
-
-    public object InviterId : AuditLogChangeKey<Snowflake>("inviter_id", serializer())
-
-    public object Location : AuditLogChangeKey<String>("location", serializer())
-
-    public object MaxUses : AuditLogChangeKey<Int>("max_uses", serializer())
-
-    public object Uses : AuditLogChangeKey<Int>("uses", serializer())
-
-    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
-
-    public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
-
-    public object Deaf : AuditLogChangeKey<Boolean>("deaf", serializer())
-
-    public object Mute : AuditLogChangeKey<Boolean>("mute", serializer())
-
-    public object Nick : AuditLogChangeKey<String>("nick", serializer())
-
-    public object AvatarHash : AuditLogChangeKey<String>("avatar_hash", serializer())
-
+    /** The id of the changed entity - sometimes used in conjunction with other keys. */
     public object Id : AuditLogChangeKey<Snowflake>("id", serializer())
 
+    /** Private thread is now invitable/uninvitable. */
+    public object Invitable : AuditLogChangeKey<Boolean>("invitable", serializer())
+
+    /** Person who created invite code changed */
+    public object InviterId : AuditLogChangeKey<Snowflake>("inviter_id", serializer())
+
+    /** Change in location for guild scheduled event. */
+    public object Location : AuditLogChangeKey<String>("location", serializer())
+
+    /** Thread is now locked/unlocked. */
+    public object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
+
+    /** How long invite code lasts changed. */
+    public object MaxAge : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
+
+    /** Change to max number of times invite code can be used. */
+    public object MaxUses : AuditLogChangeKey<Int>("max_uses", serializer())
+
+    /** Role is now mentionable/unmentionable. */
+    public object Mentionable : AuditLogChangeKey<Boolean>("mentionable", serializer())
+
+    /** Two-factor auth requirement changed. */
+    public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
+
+    /** User server muted/unmuted. */
+    public object Mute : AuditLogChangeKey<Boolean>("mute", serializer())
+
+    /** Name changed. */
+    public object Name : AuditLogChangeKey<String>("name", serializer())
+
+    /** User nickname changed. */
+    public object Nick : AuditLogChangeKey<String>("nick", serializer())
+
+    /** Channel nsfw restriction changed. */
+    public object Nsfw : AuditLogChangeKey<Boolean>("nsfw", serializer())
+
+    /** Owner changed. */
+    public object OwnerId : AuditLogChangeKey<Snowflake>("owner_id", serializer())
+
+    /** Permissions on a channel changed. */
+    public object PermissionOverwrites : AuditLogChangeKey<List<Overwrite>>("permission_overwrites", serializer())
+
+    /** Permissions for a role changed. */
+    public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
+
+    /** Text or voice channel position changed. */
+    public object Position : AuditLogChangeKey<Int>("position", serializer())
+
+    /** Preferred locale changed. */
+    public object PreferredLocale : AuditLogChangeKey<Locale>("preferred_locale", serializer())
+
+    /** Privacy level of the stage instance or guild scheduled event changed. */
+    public object PrivacyLevel : AuditLogChangeKey<Int>("privacy_level", serializer())
+
+    /** Change in number of days after which inactive and role-unassigned members are kicked. */
+    public object PruneDeleteDays : AuditLogChangeKey<Int>("prune_delete_days", serializer())
+
+    /** ID of the public updates channel changed. */
+    public object PublicUpdatesChannelId : AuditLogChangeKey<Snowflake>("public_updates_channel_id", serializer())
+
+    /**	Amount of seconds a user has to wait before sending another message changed. */
+    public object RateLimitPerUser : AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInSecondsSerializer)
+
+    /** Region changed. */
+    public object Region : AuditLogChangeKey<String>("region", serializer())
+
+    /** ID of the rules channel changed. */
+    public object RulesChannelId : AuditLogChangeKey<Snowflake>("rules_channel_id", serializer())
+
+    /** Invite splash page artwork changed. */
+    public object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
+
+    /** Status of guild scheduled event was changed. */
+    public object Status : AuditLogChangeKey<GuildScheduledEventStatus>("status", serializer())
+
+    /** ID of the system channel changed. */
+    public object SystemChannelId : AuditLogChangeKey<Snowflake>("system_channel_id", serializer())
+
+    /** Related emoji of sticker changed. */
+    public object Tags : AuditLogChangeKey<String>("tags", serializer())
+
+    /** Invite code is temporary/never expires. */
+    public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
+
+    /** Text channel topic or stage instance topic changed. */
+    public object Topic : AuditLogChangeKey<String>("topic", serializer())
+
     /**
+     * Type of entity created.
+     *
      * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
      * types yet. [Int]s are instead converted to a [String].
      */
@@ -268,37 +362,33 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
         }
     }
 
-    public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
+    /** Role unicode emoji changed. */
+    public object UnicodeEmoji : AuditLogChangeKey<String>("unicode_emoji", serializer())
 
-    public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
-
-    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInDaysSerializer)
-
+    /** New user limit in a voice channel. */
     public object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
 
-    public object Archived : AuditLogChangeKey<Boolean>("archived", serializer())
+    /** Number of times invite code was used changed. */
+    public object Uses : AuditLogChangeKey<Int>("uses", serializer())
 
-    public object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
+    /** Guild invite vanity url changed. */
+    public object VanityUrlCode : AuditLogChangeKey<String>("vanity_url_code", serializer())
 
-    public object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
+    /** Required verification level changed. */
+    public object VerificationLevel : AuditLogChangeKey<CommonVerificationLevel>("verification_level", serializer())
 
-    public object DefaultAutoArchiveDuration :
-        AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
+    /** Channel id of the server widget changed. */
+    public object WidgetChannelId : AuditLogChangeKey<Snowflake>("widget_channel_id", serializer())
 
-    public object EntityType : AuditLogChangeKey<ScheduledEntityType>(
-        "entity_type",
-        serializer()
-    )
+    /** Server widget enabled/disabled. */
+    public object WidgetEnabled : AuditLogChangeKey<Boolean>("widget_enabled", serializer())
 
-    public object Status : AuditLogChangeKey<GuildScheduledEventStatus>(
-        "status",
-        serializer()
-    )
+    /** New role added. */
+    public object Add : AuditLogChangeKey<List<DiscordPartialRole>>("\$add", serializer())
 
-    public object SkuIds : AuditLogChangeKey<List<Snowflake>>(
-        "sku_ids",
-        serializer()
-    )
+    /** Role removed. */
+    public object Remove : AuditLogChangeKey<List<DiscordPartialRole>>("\$remove", serializer())
+
 
     internal class Serializer<T>(val type: KSerializer<T>) : KSerializer<AuditLogChangeKey<T>> {
         override val descriptor: SerialDescriptor
@@ -312,64 +402,76 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
         override fun deserialize(decoder: Decoder): AuditLogChangeKey<T> {
             val name = decoder.decodeString()
             return when (name) {
-                "name" -> Name
-                "icon_hash" -> IconHash
-                "image_hash" -> ImageHash
-                "splash_hash" -> SplashHash
-                "owner_id" -> OwnerId
-                "region" -> Region
                 "afk_channel_id" -> AfkChannelId
                 "afk_timeout" -> AfkTimeout
-                "mfa_level" -> MFALevel
-                "verification_level" -> VerificationLevel
-                "explicit_content_filter" -> ExplicitContentFilter
-                "default_message_notifications" -> DefaultMessageNotificationLevel
-                "vanity_url_code" -> VanityUrlCode
-                "\$add" -> Add
-                "\$remove" -> Remove
-                "prune_delete_days" -> PruneDeleteDays
-                "widget_enabled" -> WidgetEnabled
-                "widget_channel_id" -> WidgetChannelId
-                "system_channel_id" -> SystemChannelId
-                "position" -> Position
-                "topic" -> Topic
-                "bitrate" -> Bitrate
-                "permission_overwrites" -> PermissionOverwrites
-                "nsfw" -> Nsfw
-                "application_id" -> ApplicationId
-                "rate_limit_per_user" -> RateLimitPerUser
-                "permissions" -> Permissions
-                "color" -> Color
-                "communication_disabled_until" -> CommunicationDisabledUntil
-                "hoist" -> Hoist
-                "mentionable" -> Mentionable
                 "allow" -> Allow
-                "deny" -> Deny
-                "code" -> Code
-                "channel_id" -> ChannelId
-                "inviter_id" -> InviterId
-                "location" -> Location
-                "max_uses" -> MaxUses
-                "uses" -> Uses
-                "max_age" -> MaxAges
-                "temporary" -> Temporary
-                "deaf" -> Deaf
-                "mute" -> Mute
-                "nick" -> Nick
-                "avatar_hash" -> AvatarHash
-                "id" -> Id
-                "type" -> Type
-                "enable_emoticons" -> EnableEmoticons
-                "expire_behavior" -> ExpireBehavior
-                "expire_grace_period" -> ExpireGracePeriod
-                "user_limit" -> UserLimit
-                "locked" -> Locked
+                "application_id" -> ApplicationId
                 "archived" -> Archived
                 "auto_archive_duration" -> AutoArchiveDuration
+                "available" -> Available
+                "avatar_hash" -> AvatarHash
+                "banner_hash" -> BannerHash
+                "bitrate" -> Bitrate
+                "channel_id" -> ChannelId
+                "code" -> Code
+                "color" -> Color
+                "communication_disabled_until" -> CommunicationDisabledUntil
+                "deaf" -> Deaf
                 "default_auto_archive_duration" -> DefaultAutoArchiveDuration
+                "default_message_notifications" -> DefaultMessageNotifications
+                "deny" -> Deny
+                "description" -> Description
+                "discovery_splash_hash" -> DiscoverySplashHash
+                "enable_emoticons" -> EnableEmoticons
                 "entity_type" -> EntityType
+                "expire_behavior" -> ExpireBehavior
+                "expire_grace_period" -> ExpireGracePeriod
+                "explicit_content_filter" -> ExplicitContentFilter
+                "format_type" -> FormatType
+                "guild_id" -> GuildId
+                "hoist" -> Hoist
+                "icon_hash" -> IconHash
+                "image_hash" -> ImageHash
+                "id" -> Id
+                "invitable" -> Invitable
+                "inviter_id" -> InviterId
+                "location" -> Location
+                "locked" -> Locked
+                "max_age" -> MaxAge
+                "max_uses" -> MaxUses
+                "mentionable" -> Mentionable
+                "mfa_level" -> MFALevel
+                "mute" -> Mute
+                "name" -> Name
+                "nick" -> Nick
+                "nsfw" -> Nsfw
+                "owner_id" -> OwnerId
+                "permission_overwrites" -> PermissionOverwrites
+                "permissions" -> Permissions
+                "position" -> Position
+                "preferred_locale" -> PreferredLocale
+                "privacy_level" -> PrivacyLevel
+                "prune_delete_days" -> PruneDeleteDays
+                "public_updates_channel_id" -> PublicUpdatesChannelId
+                "rate_limit_per_user" -> RateLimitPerUser
+                "region" -> Region
+                "rules_channel_id" -> RulesChannelId
+                "splash_hash" -> SplashHash
                 "status" -> Status
-                "sku_ids" -> SkuIds
+                "system_channel_id" -> SystemChannelId
+                "tags" -> Tags
+                "temporary" -> Temporary
+                "topic" -> Topic
+                "type" -> Type
+                "unicode_emoji" -> UnicodeEmoji
+                "user_limit" -> UserLimit
+                "uses" -> Uses
+                "vanity_url_code" -> VanityUrlCode
+                "verification_level" -> VerificationLevel
+                "widget_channel_id" -> WidgetChannelId
+                "widget_enabled" -> WidgetEnabled
+                "\$add" -> Add
+                "\$remove" -> Remove
                 else -> Unknown(name)
             } as AuditLogChangeKey<T>
         }
