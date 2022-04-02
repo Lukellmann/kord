@@ -42,7 +42,7 @@ public data class DiscordRoleTags(
 @Serializable
 public data class DiscordPartialRole(
     val id: Snowflake,
-    val name: Optional<String> = Optional.Missing(),
+    val name: String,
     val color: OptionalInt = OptionalInt.Missing,
     val hoist: OptionalBoolean = OptionalBoolean.Missing,
     val icon: Optional<String?> = Optional.Missing(),
