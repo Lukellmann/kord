@@ -391,8 +391,8 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
 
 
     internal class Serializer<T>(val type: KSerializer<T>) : KSerializer<AuditLogChangeKey<T>> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.AuditLogKey", PrimitiveKind.STRING)
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.AuditLogChangeKey", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, value: AuditLogChangeKey<T>) {
             encoder.encodeString(value.name)
