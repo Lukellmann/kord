@@ -8,8 +8,10 @@ import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -38,7 +40,7 @@ public data class DiscordAuditLog(
 public data class DiscordAuditLogEntry(
     @SerialName("target_id")
     val targetId: Snowflake?,
-    val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
+    val changes: Optional<List<AuditLogChange<@Contextual Any?>>> = Optional.Missing(),
     @SerialName("user_id")
     val userId: Snowflake?,
     val id: Snowflake,
@@ -82,52 +84,42 @@ public data class AuditLogChange<T>(
     val key: AuditLogChangeKey<T>,
 ) {
 
-    internal class Serializer<T>(val ser: KSerializer<T>) : KSerializer<AuditLogChange<T>> {
-        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Kord.AuditLogChange", ser.descriptor) {
-            element<JsonElement>("new_value")
-            element<JsonElement>("old_value")
-            element("key", ser.descriptor)
-        }
+    internal class Serializer<T>(type: KSerializer<T>) : KSerializer<AuditLogChange<T>> {
+        private val keySerializer = AuditLogChangeKey.serializer(type)
 
-        override fun deserialize(decoder: Decoder): AuditLogChange<T> {
-            decoder.decodeStructure(descriptor) {
-                var new: JsonElement? = null
-                var old: JsonElement? = null
-                lateinit var key: AuditLogChangeKey<*>
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> key = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            AuditLogChangeKey.Serializer(Unit.serializer())
-                        )
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+        override val descriptor: SerialDescriptor =
+            buildClassSerialDescriptor("dev.kord.common.entity.AuditLogChange", type.descriptor) {
+                element("new_value", type.descriptor, isOptional = true)
+                element("old_value", type.descriptor, isOptional = true)
+                element("key", keySerializer.descriptor)
+            }
+
+        override fun deserialize(decoder: Decoder): AuditLogChange<T> = decoder.decodeStructure(descriptor) {
+            var new: JsonElement? = null
+            var old: JsonElement? = null
+            lateinit var key: AuditLogChangeKey<T>
+
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> key = decodeSerializableElement(descriptor, index, keySerializer)
+
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("Unexpected index: $index")
                 }
-
-                val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
-                val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
-
-                @Suppress("UNCHECKED_CAST")
-                return AuditLogChange(
-                    new = newVal,
-                    old = oldVal,
-                    key = key as AuditLogChangeKey<Any?>
-                ) as AuditLogChange<T>
             }
+
+            val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
+            val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
+
+            AuditLogChange(new = newVal, old = oldVal, key)
         }
 
-        @Suppress("UNCHECKED_CAST")
-        override fun serialize(encoder: Encoder, value: AuditLogChange<T>) {
-            val logChange = value as AuditLogChange<Unit>
-            encoder.encodeStructure(descriptor) {
-                encodeSerializableElement(descriptor, 0, logChange.key.serializer, logChange.new as Unit)
-                encodeSerializableElement(descriptor, 0, logChange.key.serializer, logChange.old as Unit)
-                encodeSerializableElement(descriptor, 0, AuditLogChangeKey.serializer(Unit.serializer()), logChange.key)
-            }
+        override fun serialize(encoder: Encoder, value: AuditLogChange<T>) = encoder.encodeStructure(descriptor) {
+            value.new?.let { encodeSerializableElement(descriptor, 0, value.key.serializer, it) }
+            value.old?.let { encodeSerializableElement(descriptor, 1, value.key.serializer, it) }
+            encodeSerializableElement(descriptor, 2, keySerializer, value.key)
         }
     }
 }
@@ -390,16 +382,15 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Remove : AuditLogChangeKey<List<DiscordPartialRole>>("\$remove", serializer())
 
 
-    internal class Serializer<T>(val type: KSerializer<T>) : KSerializer<AuditLogChangeKey<T>> {
+    internal object Serializer : KSerializer<AuditLogChangeKey<*>> {
         override val descriptor: SerialDescriptor =
             PrimitiveSerialDescriptor("dev.kord.common.entity.AuditLogChangeKey", PrimitiveKind.STRING)
 
-        override fun serialize(encoder: Encoder, value: AuditLogChangeKey<T>) {
+        override fun serialize(encoder: Encoder, value: AuditLogChangeKey<*>) {
             encoder.encodeString(value.name)
         }
 
-        @Suppress("UNCHECKED_CAST")
-        override fun deserialize(decoder: Decoder): AuditLogChangeKey<T> = when (val name = decoder.decodeString()) {
+        override fun deserialize(decoder: Decoder): AuditLogChangeKey<*> = when (val name = decoder.decodeString()) {
             "afk_channel_id" -> AfkChannelId
             "afk_timeout" -> AfkTimeout
             "allow" -> Allow
@@ -471,7 +462,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
             "\$add" -> Add
             "\$remove" -> Remove
             else -> Unknown(name)
-        } as AuditLogChangeKey<T>
+        }
     }
 }
 
