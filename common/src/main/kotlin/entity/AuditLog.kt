@@ -19,6 +19,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
 import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
+import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
 import dev.kord.common.entity.MFALevel as CommonMFALevel
 import dev.kord.common.entity.Permissions as CommonPermissions
@@ -180,9 +181,17 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object DefaultAutoArchiveDuration :
         AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
 
+    @Deprecated(
+        "Renamed to 'DefaultMessageNotifications'.",
+        ReplaceWith("AuditLogChangeKey.DefaultMessageNotifications", "dev.kord.common.entity.AuditLogChangeKey"),
+        DeprecationLevel.ERROR,
+    )
+    public object DefaultMessageNotificationLevel :
+        AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
+
     /** Default message notification level changed. */
     public object DefaultMessageNotifications :
-        AuditLogChangeKey<DefaultMessageNotificationLevel>("default_message_notifications", serializer())
+        AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
 
     /** A permission on a text or voice channel was denied for a role. */
     public object Deny : AuditLogChangeKey<CommonPermissions>("deny", serializer())
@@ -238,6 +247,13 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
 
     /** Thread is now locked/unlocked. */
     public object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
+
+    @Deprecated(
+        "Renamed to 'MaxAge'.",
+        ReplaceWith("AuditLogChangeKey.MaxAge", "dev.kord.common.entity.AuditLogChangeKey"),
+        DeprecationLevel.ERROR,
+    )
+    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
 
     /** How long invite code lasts changed. */
     public object MaxAge : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
