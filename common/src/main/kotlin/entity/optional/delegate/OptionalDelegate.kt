@@ -54,3 +54,70 @@ public fun <V : Any> KMutableProperty0<Optional<V?>>.delegate(): ReadWriteProper
         }
 
     }
+
+
+public interface OptionalAndNullableDelegate<V : Any> : ReadWriteProperty<Any?, V?> {
+    public fun resetToDefault()
+    public val optional: Optional<V?>
+}
+
+public class NullAsNullDefaultMissing<V : Any> : OptionalAndNullableDelegate<V> {
+
+    private companion object {
+        // unique reference to distinguish between missing and null
+        private val MISSING = Any()
+    }
+
+    private var value: Any? /* V? | MISSING */ = MISSING
+
+    override fun resetToDefault() {
+        value = MISSING
+    }
+
+    override val optional: Optional<V?>
+        get() {
+            val v = value
+            @Suppress("UNCHECKED_CAST")
+            return when {
+                v === MISSING -> Optional.Missing()
+                v == null -> Optional.Null()
+                else -> Optional.Value(v as V)
+            }
+        }
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): V? {
+        val v = value
+        @Suppress("UNCHECKED_CAST")
+        return if (v === MISSING) null else v as V?
+    }
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: V?) {
+        this.value = value
+    }
+}
+
+
+public interface OptionalDelegate<V : Any> : OptionalAndNullableDelegate<V> {
+    override val optional: Optional<V>
+}
+
+public class NullAsMissingDefaultMissing<V : Any> : OptionalDelegate<V> {
+
+    private var value: V? = null
+
+    override fun resetToDefault() {
+        value = null
+    }
+
+    override val optional: Optional<V>
+        get() = when (val v = value) {
+            null -> Optional.Missing()
+            else -> Optional.Value(v)
+        }
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): V? = value
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: V?) {
+        this.value = value
+    }
+}
