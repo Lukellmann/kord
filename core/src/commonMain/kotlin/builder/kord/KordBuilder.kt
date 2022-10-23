@@ -25,6 +25,7 @@ import dev.kord.rest.request.*
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -220,7 +221,26 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
         val shardsInfo = shardsBuilder(recommendedShards)
         val shards = shardsInfo.indices.toList()
 
-        if (client.engine.config.threadsCount < shards.size + 1) {
+        val engineConfig = client.engineConfig
+
+        if (engineConfig is CIOEngineConfig) {
+            if (engineConfig.endpoint.maxConnectionsPerRoute < shards.size) {
+                logger.warn {
+                    """
+                    Kord's http client
+                    
+                    val kord = Kord("token") {
+                        client = HttpClient(CIO) {
+                            engine.endpoint.maxConnectionsPerRoute = numShards * 2
+                        }
+                    }
+                    """.trimIndent()
+                }
+            }
+
+        }
+
+        if (engineConfig.threadsCount < shards.size + 1) {
             logger.warn {
                 """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
