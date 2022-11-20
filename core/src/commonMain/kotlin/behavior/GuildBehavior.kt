@@ -54,6 +54,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
@@ -241,15 +242,24 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
      * If no nonce was provided one will be generated instead.
      */
-    @PrivilegedIntent
     public fun requestMembers(request: RequestGuildMembers): Flow<MembersChunkEvent> {
         val gateway = gateway ?: return emptyFlow()
 
-        val nonce = request.nonce.value ?: RequestGuildMembers.Nonce.new()
-        val withNonce = request.copy(nonce = Optional.Value(nonce))
+        val nonce: String
+        val requestWithNonce: RequestGuildMembers
+        when (val existingNonce = request.nonce.value) {
+            null -> {
+                nonce = RequestGuildMembers.Nonce.new()
+                requestWithNonce = request.copy(nonce = Optional.Value(nonce))
+            }
+            else -> {
+                nonce = existingNonce
+                requestWithNonce = request
+            }
+        }
 
         return kord.events
-            .onSubscription { gateway.send(withNonce) }
+            .onSubscription { gateway.send(requestWithNonce) }
             .filterIsInstance<MembersChunkEvent>()
             .filter { it.nonce == nonce }
             .transformWhile {
@@ -979,8 +989,8 @@ public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBu
 }
 
 /**
- * Executes a [RequestGuildMembers] command configured by the [builder] for guild
- * on this gateway, returning a flow of [MembersChunkEvent] responses.
+ * Executes a [RequestGuildMembers] command configured by the [builder] for this guild,
+ * returning a flow of [MembersChunkEvent] responses.
  *
  * If no [builder] is specified, the request will be configured to fetch all members.
  *
@@ -988,17 +998,47 @@ public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBu
  * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
  * will result in an [IllegalStateException] being thrown.
  *
- * Executing the request on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
- * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
- * can result in undefined behavior for the returned flow and inconsistencies in the cache.
- *
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@PrivilegedIntent
-public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
+public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit): Flow<MembersChunkEvent> {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
+    return requestMembers(request)
+}
+
+@Deprecated(
+    """
+    This function emulates the function the Kotlin compiler generated when GuildBehavior.requestMembers had a default
+    parameter (for binary compatibility reasons, keep for some releases).
+    javap -l -c core/build/classes/kotlin/main/dev/kord/core/behavior/GuildBehaviorKt.class was used to compare the
+    bytecode before and after this change - it is semantically equivalent but not exactly the same.
+    """,
+    level = HIDDEN,
+)
+@Suppress("WRONG_MODIFIER_TARGET", "FunctionName")
+@PrivilegedIntent
+public open fun GuildBehavior.`requestMembers$default`(
+    builder: (RequestGuildMembersBuilder.() -> Unit)?,
+    flags: Int,
+    unused: Any?,
+): Flow<MembersChunkEvent> {
+    val builderFunction = if ((flags and 1) != 0) ({ requestAllMembers() }) else builder!!
+    val request = RequestGuildMembersBuilder(id).apply(builderFunction).toRequest()
+    return requestMembers(request)
+}
+
+/**
+ * Executes a [RequestGuildMembers] command configured to fetch all members for this guild,
+ * returning a flow of [MembersChunkEvent] responses.
+ *
+ * The returned flow is cold, and will execute the request only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ */
+@PrivilegedIntent
+public fun GuildBehavior.requestMembers(): Flow<MembersChunkEvent> {
+    val request = RequestGuildMembersBuilder(id).apply { requestAllMembers() }.toRequest()
     return requestMembers(request)
 }
 

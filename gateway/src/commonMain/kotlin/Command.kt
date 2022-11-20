@@ -27,7 +27,6 @@ public sealed class Command {
             element("d", JsonElement.serializer().descriptor)
         }
 
-        @OptIn(PrivilegedIntent::class)
         override fun serialize(encoder: Encoder, value: Command) {
             val composite = encoder.beginStructure(descriptor)
             when (value) {
@@ -147,9 +146,8 @@ public data class Resume(
  * @param userIds The ids of the user to match against.
  * @param nonce A nonce to identify the [GuildMembersChunkData.nonce] responses.
  */
-@PrivilegedIntent
 @Serializable
-public data class RequestGuildMembers(
+public data class RequestGuildMembers @PrivilegedIntent public constructor(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val query: Optional<String> = Optional.Missing(),

@@ -38,7 +38,7 @@ import kotlin.jvm.JvmName
     level = ERROR,
 )
 @Retention(BINARY)
-@Target(CLASS, PROPERTY, FUNCTION)
+@Target(CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, PROPERTY_SETTER)
 public annotation class PrivilegedIntent
 
 /**

@@ -183,7 +183,8 @@ public inline fun <reified T : Event> Gateway.on(
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(PrivilegedIntent::class)
+// todo same here
+@PrivilegedIntent
 public fun Gateway.requestGuildMembers(
     guildId: Snowflake,
     builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
@@ -207,7 +208,6 @@ public fun Gateway.requestGuildMembers(
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(PrivilegedIntent::class)
 public fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembersChunk> {
     val nonce = request.nonce.value ?: RequestGuildMembers.Nonce.new()
     val withNonce = request.copy(nonce = Optional.Value(nonce))

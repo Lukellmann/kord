@@ -16,7 +16,6 @@ import dev.kord.gateway.RequestGuildMembers
  *
  * @param guildId The id of the guild on which to execute the command.
  */
-@OptIn(PrivilegedIntent::class)
 @KordDsl
 public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
 
@@ -41,8 +40,10 @@ public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
 
     /**
      * Whether [GuildMembersChunkData.presences] should be present in the response.
-     * [Intent.GuildPresences] is required to enable [presences].
+     *
+     * The [privileged][PrivilegedIntent] [Intent.GuildPresences] is required to set this to `true`.
      */
+    @set:PrivilegedIntent
     public var presences: Boolean? by ::_presences.delegate()
 
     /**
@@ -59,15 +60,17 @@ public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
 
     /**
      * Utility function that sets the required fields for requesting all members.
+     *
+     * The [privileged][PrivilegedIntent] [Intent.GuildMembers] is required for this.
      */
+    @PrivilegedIntent
     public fun requestAllMembers() {
         limit = 0
         query = ""
         userIds.clear()
     }
 
-    public fun toRequest(): RequestGuildMembers = RequestGuildMembers(
+    public fun toRequest(): RequestGuildMembers = @OptIn(PrivilegedIntent::class) RequestGuildMembers(
         guildId, _query, _limit, _presences, Optional.missingOnEmpty(userIds), _nonce
     )
-
 }
