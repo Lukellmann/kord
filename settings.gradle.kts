@@ -5,6 +5,7 @@ include(
     "common",
     "core",
     "gateway",
+    "generators",
     "ksp-annotations",
     "ksp-processors",
     "rest",
