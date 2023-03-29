@@ -9,6 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -80,7 +81,7 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
 
 
     private val past = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
-    private val future = Instant.fromEpochMilliseconds(Long.MAX_VALUE)
+    private val future = Instant.fromEpochMilliseconds(Long.MAX_VALUE) minus (-(1.milliseconds - 1.nanoseconds))
 
     // platform-dependent
     private val pastClamped = past.toEpochMilliseconds() != Long.MIN_VALUE
@@ -93,7 +94,7 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     @JsName("test7")
     fun `future Instant under limit can be serialized`() {
         assertEquals(
-            expected = (if (futureClamped) clampedMax else Long.MAX_VALUE - 1).toString(),
+            expected = (if (futureClamped) clampedMax else Long.MAX_VALUE).toString(),
             actual = serialize(future minus 1.nanoseconds),
         )
     }

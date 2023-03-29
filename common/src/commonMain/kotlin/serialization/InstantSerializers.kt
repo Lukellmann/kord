@@ -8,31 +8,45 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
 
+private val PLATFORM_MIN_INSTANT = Instant.fromEpochSeconds(Long.MIN_VALUE, Long.MIN_VALUE)
+private val PLATFORM_MAX_INSTANT = Instant.fromEpochSeconds(Long.MAX_VALUE, Long.MAX_VALUE)
 
 // epoch milliseconds
 
 /** Serializer that encodes and decodes [Instant]s in [epoch milliseconds][Instant.toEpochMilliseconds]. */
 public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
 
-    private val VALID_RANGE =
-        Instant.fromEpochMilliseconds(Long.MIN_VALUE)..Instant.fromEpochMilliseconds(Long.MAX_VALUE)
+    // fractional part of milliseconds is rounded down to the whole number of milliseconds
+    // -> add (1ms - 1ns) for biggest non-coerced Instant
+    private val VALID_INSTANTS = Instant.fromEpochMilliseconds(Long.MIN_VALUE)..
+        ((Instant.fromEpochMilliseconds(Long.MAX_VALUE) + (1.milliseconds - 1.nanoseconds))
+            // workaround for https://github.com/Kotlin/kotlinx-datetime/issues/263
+            .takeIf { it > Instant.fromEpochSeconds(0) } ?: Instant.fromEpochMilliseconds(Long.MAX_VALUE))
+
+    private val VALID_MILLISECONDS =
+        PLATFORM_MIN_INSTANT.toEpochMilliseconds()..PLATFORM_MAX_INSTANT.toEpochMilliseconds()
 
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.InstantInEpochMilliseconds", PrimitiveKind.LONG)
 
     override fun serialize(encoder: Encoder, value: Instant) {
-
-        if (value !in VALID_RANGE) throw SerializationException(
+        if (value !in VALID_INSTANTS) throw SerializationException(
             "The Instant $value expressed as a number of milliseconds from the epoch Instant does not fit in the " +
-                    "range of Long type and therefore cannot be serialized with InstantInEpochMillisecondsSerializer"
+                "range of Long type and therefore cannot be serialized with InstantInEpochMillisecondsSerializer"
         )
-
         encoder.encodeLong(value.toEpochMilliseconds())
     }
 
     override fun deserialize(decoder: Decoder): Instant {
-        return Instant.fromEpochMilliseconds(decoder.decodeLong())
+        val epochMilliseconds = decoder.decodeLong()
+        if (epochMilliseconds !in VALID_MILLISECONDS) throw SerializationException(
+            "The Instant representing $epochMilliseconds milliseconds from the epoch Instant would be out of the " +
+                "boundaries for Instant." // todo test
+        )
+        return Instant.fromEpochMilliseconds(epochMilliseconds)
     }
 }
 
@@ -48,6 +62,8 @@ public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
 /** Serializer that encodes and decodes [Instant]s in [epoch seconds][Instant.epochSeconds]. */
 public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
 
+    private val VALID_SECONDS = PLATFORM_MIN_INSTANT.epochSeconds..PLATFORM_MAX_INSTANT.epochSeconds
+
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.InstantInEpochSeconds", PrimitiveKind.LONG)
 
@@ -57,7 +73,12 @@ public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
     }
 
     override fun deserialize(decoder: Decoder): Instant {
-        return Instant.fromEpochSeconds(decoder.decodeLong())
+        val epochSeconds = decoder.decodeLong()
+        if (epochSeconds !in VALID_SECONDS) throw SerializationException(
+            "The Instant representing $epochSeconds seconds from the epoch Instant would be out of the boundaries " +
+                "for Instant." // todo test
+        )
+        return Instant.fromEpochSeconds(epochSeconds)
     }
 }
 

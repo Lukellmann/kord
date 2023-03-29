@@ -42,6 +42,15 @@ public sealed class DurationAsLongSerializer(
 
     final override fun deserialize(decoder: Decoder): Duration {
         return decoder.decodeLong().toDuration(unit)
+//        val long = decoder.decodeLong()
+//        val duration = long.toDuration(unit)
+//        if (duration.isInfinite()) throw SerializationException(
+//            "" // todo test and message
+//        )
+//        if (long != duration.toLong(unit)) throw SerializationException(
+//            "" // todo test and message
+//        )
+//        return duration
     }
 }
 
