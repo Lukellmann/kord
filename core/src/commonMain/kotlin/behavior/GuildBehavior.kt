@@ -125,6 +125,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get the integrations of this guild.
      */
+    // todo use cache
     public val integrations: Flow<Integration>
         get() = flow {
             kord.rest.guild.getGuildIntegrations(id).forEach {

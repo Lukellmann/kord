@@ -19,6 +19,7 @@ import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 
 @Serializable
 public data class GuildCreateRequest(
@@ -215,9 +216,17 @@ public data class GuildRoleModifyRequest(
 @Serializable
 public data class GuildMFALevelModifyRequest(val level: MFALevel)
 
+@Deprecated(
+    "Bots can't use this functionality anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+    level = WARNING,
+)
 @Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 
+@Deprecated(
+    "Bots can't use this functionality anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+    level = WARNING,
+)
 @Serializable
 public data class GuildIntegrationModifyRequest(
     @SerialName("expire_behavior")

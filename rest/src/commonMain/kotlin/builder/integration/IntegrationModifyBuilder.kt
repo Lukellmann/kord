@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package dev.kord.rest.builder.integration
 
 import dev.kord.common.annotation.KordDsl
@@ -8,10 +10,15 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildIntegrationModifyRequest
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * Builder for [modifying an integration](https://discord.com/developers/docs/resources/guild#modify-guild-integration).
  */
+@Deprecated(
+    "Bots can't use this functionality anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+    level = WARNING,
+)
 @KordDsl
 public class IntegrationModifyBuilder : AuditRequestBuilder<GuildIntegrationModifyRequest> {
 

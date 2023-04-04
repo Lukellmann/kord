@@ -1,4 +1,15 @@
 @file:GenerateKordEnum(
+    name = "IntegrationType", valueType = STRING,
+    docUrl = "https://discord.com/developers/docs/resources/guild#integration-object-integration-structure",
+    entries = [
+        Entry("Twitch", stringValue = "twitch"),
+        Entry("YouTube", stringValue = "youtube"),
+        Entry("Discord", stringValue = "discord"),
+        Entry("GuildSubscription", stringValue = "guild_subscription"),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "IntegrationExpireBehavior", valueType = INT,
     deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors",
@@ -18,15 +29,17 @@ import dev.kord.common.serialization.DurationInDays
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class DiscordIntegration(
     val id: Snowflake,
     val name: String,
-    val type: String,
+    val type: IntegrationType,
     val enabled: Boolean,
     val syncing: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("role_id")
@@ -45,9 +58,13 @@ public data class DiscordIntegration(
     val subscriberCount: OptionalInt = OptionalInt.Missing,
     val revoked: OptionalBoolean = OptionalBoolean.Missing,
     val application: Optional<IntegrationApplication> = Optional.Missing(),
+    val scopes: Optional<List<OAuth2Scope>> = Optional.Missing(),
     @SerialName("guild_id") // available in Integration Create and Integration Update events
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-)
+) {
+    @Deprecated("Binary compatibility, keep for some releases.", level = HIDDEN)
+    public fun getType(): String = type.value
+}
 
 @Serializable
 public data class DiscordPartialIntegration(

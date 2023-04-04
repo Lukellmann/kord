@@ -7,3 +7,7 @@ out/
 !**/build/generated/
 # re-exclude BuildConfigGenerated.kt
 common/build/generated/source/buildConfig/main/main/dev/kord/common/BuildConfigGenerated.kt
+
+
+# integrations todo: search Guild.md Gateway_Events.md Permissions.md Audit_Log.md Opcodes_and_Status_Code.md Gateway.md\
+# for 'integration' and see if everything fits

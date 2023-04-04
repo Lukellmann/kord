@@ -15,6 +15,7 @@ import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.Json
+import kotlin.DeprecationLevel.WARNING
 
 public sealed interface ResponseMapper<T> {
     public fun deserialize(json: Json, body: String): T
@@ -533,16 +534,28 @@ public sealed class Route<T>(
             ListSerializer(DiscordIntegration.serializer())
         )
 
-    public object GuildIntegrationPost : // TODO does this endpoint still/even exist?
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
+    public object GuildIntegrationPost :
         Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
 
-    public object GuildIntegrationPatch : // TODO does this endpoint still/even exist?
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
+    public object GuildIntegrationPatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
     public object GuildIntegrationDelete :
         Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
-    public object GuildIntegrationSyncPost : // TODO does this endpoint still/even exist?
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
+    public object GuildIntegrationSyncPost :
         Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations/$IntegrationId/sync", NoStrategy)
 
     public object GuildWidgetGet :

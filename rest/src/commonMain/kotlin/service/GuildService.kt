@@ -5,7 +5,6 @@ import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
-import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.builder.member.MemberAddBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
@@ -20,6 +19,7 @@ import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -333,22 +333,32 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
         }
 
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
     public suspend fun createGuildIntegration(guildId: Snowflake, integration: GuildIntegrationCreateRequest): Unit =
         call(Route.GuildIntegrationPost) {
             keys[Route.GuildId] = guildId
             body(GuildIntegrationCreateRequest.serializer(), integration)
         }
 
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
     public suspend inline fun modifyGuildIntegration(
         guildId: Snowflake,
         integrationId: Snowflake,
-        builder: IntegrationModifyBuilder.() -> Unit
+        builder: dev.kord.rest.builder.integration.IntegrationModifyBuilder.() -> Unit
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         call(Route.GuildIntegrationPatch) {
             keys[Route.GuildId] = guildId
             keys[Route.IntegrationId] = integrationId
-            val modifyBuilder = IntegrationModifyBuilder().apply(builder)
+            val modifyBuilder = dev.kord.rest.builder.integration.IntegrationModifyBuilder().apply(builder)
             body(GuildIntegrationModifyRequest.serializer(), modifyBuilder.toRequest())
             auditLogReason(modifyBuilder.reason)
         }
@@ -364,6 +374,11 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         auditLogReason(reason)
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Bots can't use this route anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+        level = WARNING,
+    )
     public suspend fun syncGuildIntegration(guildId: Snowflake, integrationId: Snowflake): Unit =
         call(Route.GuildIntegrationSyncPost) {
             keys[Route.GuildId] = guildId

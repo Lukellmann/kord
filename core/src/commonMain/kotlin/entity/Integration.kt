@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.IntegrationExpireBehavior
+import dev.kord.common.entity.IntegrationType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
@@ -13,10 +14,10 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.js.JsName
@@ -41,11 +42,11 @@ public class Integration(
     public val name: String
         get() = data.name
 
-    /**
-     * The type of integration. (`"twitch"`, `"youtube"`, `"discord"` or `"guild_subscription"`)
-     */
-    public val type: String
-        get() = data.type
+    @Deprecated("Binary compatibility, keep for some releases.", level = HIDDEN)
+    public fun getType(): String = type.value
+
+    /** The [type][IntegrationType] of this integration. */
+    public val type: IntegrationType get() = data.type
 
     /**
      * Whether this integration is currently active.
@@ -78,21 +79,21 @@ public class Integration(
     /**
      * The id of the [role][Role] used for 'subscribers' of the integration.
      */
-    public val roleId: Snowflake
-        get() = data.id
+    public val roleId: Snowflake?
+        get() = data.roleId.value
 
     /**
      * The behavior of the [role][Role] used for 'subscribers' of the integration.
      */
-    public val role: RoleBehavior
-        get() = RoleBehavior(guildId = guildId, id = roleId, kord = kord)
+    public val role: RoleBehavior?
+        get() = roleId?.let { id -> RoleBehavior(guildId = guildId, id = id, kord = kord) }
 
 
     /**
      * Whether this integration requires emoticons to be synced, only supports Twitch right now.
      */
     public val enablesEmoticons: Boolean
-        get() = data.enableEmoticons.orElse(false)
+        get() = data.enableEmoticons.orElse(false) // todo orElse? also new name: enableEmoticons
 
     /**
      * The behavior used to expire subscribers.
@@ -112,19 +113,21 @@ public class Integration(
     /**
      * The id of the [user][User] for this integration.
      */
-    public val userId: Snowflake
-        get() = data.id
+    public val userId: Snowflake?
+        get() = data.userId.value
 
     /**
      * The behavior of the [user][User] for this integration.
      */
-    public val user: UserBehavior
-        get() = UserBehavior(id = userId, kord = kord)
+    public val user: UserBehavior?
+        get() = userId?.let { id -> UserBehavior(id = id, kord = kord) }
 
     /**
      * When this integration was last synced.
      */
     public val syncedAt: Instant? get() = data.syncedAt.value
+
+    // todo add missing properties + suspend functions for getting entities
 
     /**
      * Requests to get the guild this integration is tied to.
@@ -169,21 +172,23 @@ public class Integration(
     /**
      * Request to sync an integration.
      */
+    @Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+    @Deprecated(
+        "Bots can't use this functionality anymore, see https://github.com/discord/discord-api-docs/pull/2087 for " +
+            "details.",
+        level = WARNING,
+    )
     public suspend fun sync(): Unit = kord.rest.guild.syncGuildIntegration(guildId = guildId, integrationId = id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
         Integration(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = hash(id)
 
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Integration -> other.id == id && other.guildId == guildId
-        else -> false
-    }
+    override fun equals(other: Any?): Boolean =
+        other is Integration && this.id == other.id && this.guildId == other.guildId
 
-    override fun toString(): String {
-        return "Integration(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun hashCode(): Int = hash(id, guildId)
+    override fun toString(): String = "Integration(data=$data, kord=$kord, supplier=$supplier)"
 
 }
 
@@ -194,7 +199,12 @@ public class Integration(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-public suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {
+@Suppress("DEPRECATION")
+@Deprecated(
+    "Bots can't use this functionality anymore, see https://github.com/discord/discord-api-docs/pull/2087 for details.",
+    level = WARNING,
+)
+public suspend inline fun Integration.edit(builder: dev.kord.rest.builder.integration.IntegrationModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
