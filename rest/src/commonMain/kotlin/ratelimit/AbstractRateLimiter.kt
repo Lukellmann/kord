@@ -1,6 +1,7 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.common.ConcurrentHashMap
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
@@ -14,6 +15,7 @@ import kotlinx.datetime.Clock
 import mu.KLogger
 import kotlin.time.Duration.Companion.minutes
 
+@OptIn(KordInternal::class)
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 

@@ -1,5 +1,6 @@
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
@@ -24,7 +25,7 @@ public sealed class VoiceEvent {
             element("d", JsonElement.serializer().descriptor)
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class, KordVoice::class)
         override fun deserialize(decoder: Decoder): VoiceEvent? {
             var op: OpCode? = null
             var data: VoiceEvent? = null
@@ -97,6 +98,7 @@ public data class SessionDescription(
     val secretKey: List<UByte>
 ) : VoiceEvent()
 
+@KordVoice
 @Serializable
 public data class Speaking(
     @SerialName("user_id")

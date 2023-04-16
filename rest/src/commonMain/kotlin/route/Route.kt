@@ -1,7 +1,6 @@
 package dev.kord.rest.route
 
 import dev.kord.common.KordConfiguration
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.*
@@ -458,8 +457,7 @@ public sealed class Route<T>(
             ListSerializer(DiscordGuildMember.serializer())
         )
 
-    @KordExperimental
-    public object GuildMembersSearchGet : // https://github.com/discord/discord-api-docs/pull/1577
+    public object GuildMembersSearchGet :
         Route<List<DiscordGuildMember>>(
             HttpMethod.Get,
             "/guilds/$GuildId/members/search",

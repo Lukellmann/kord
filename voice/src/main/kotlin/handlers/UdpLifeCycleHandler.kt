@@ -1,5 +1,6 @@
 package dev.kord.voice.handlers
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.FrameInterceptorConfiguration
 import dev.kord.voice.VoiceConnection
@@ -18,6 +19,7 @@ import mu.KotlinLogging
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
 
+@OptIn(KordVoice::class)
 internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
     private val connection: VoiceConnection

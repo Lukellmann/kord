@@ -1,5 +1,4 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     org.jetbrains.kotlin.jvm
@@ -30,12 +29,14 @@ kotlin {
 
     compilerOptions {
         applyKordCompilerOptions()
-        optIn.addAll(kordOptIns)
     }
 
     sourceSets {
-        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        test { languageSettings.optIn(OptIns.coroutines) }
+        test {
+            languageSettings {
+                testOptIns.forEach(::optIn)
+            }
+        }
     }
 }
 

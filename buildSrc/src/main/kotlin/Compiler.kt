@@ -7,17 +7,13 @@ import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
-object OptIns {
-    const val coroutines = "kotlinx.coroutines.ExperimentalCoroutinesApi"
-}
-
-val kordOptIns = listOf(
-    "kotlin.contracts.ExperimentalContracts",
+val testOptIns = listOf(
+    // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
+    "kotlinx.coroutines.ExperimentalCoroutinesApi",
 
     "dev.kord.common.annotation.KordInternal",
     "dev.kord.common.annotation.KordPreview",
     "dev.kord.common.annotation.KordExperimental",
-    "dev.kord.common.annotation.KordVoice",
 )
 
 object Jvm {
@@ -27,13 +23,12 @@ object Jvm {
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
+    optIn.add("kotlin.contracts.ExperimentalContracts")
 }
 
 fun KotlinSourceSet.applyKordOptIns() {
     languageSettings {
-        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        if ("Test" in name) optIn(OptIns.coroutines)
-        kordOptIns.forEach(::optIn)
+        if ("Test" in name) testOptIns.forEach(::optIn)
     }
 }
 

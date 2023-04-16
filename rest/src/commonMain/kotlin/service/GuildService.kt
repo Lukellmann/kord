@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
@@ -121,7 +120,6 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      *
      * @param limit limits the maximum amount of members returned. Max `1000`, defaults to `1`.
      */
-    @KordExperimental
     public suspend fun getGuildMembers(
         guildId: Snowflake,
         query: String,

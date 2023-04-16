@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -75,10 +74,8 @@ public data class GuildChannelCreateRequest(
 public data class ChannelPositionSwapRequest(
     val id: Snowflake,
     val position: OptionalInt? = OptionalInt.Missing,
-    @KordExperimental
     @SerialName("lock_permissions")
     val lockPermissions: OptionalBoolean? = OptionalBoolean.Missing,
-    @KordExperimental
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )

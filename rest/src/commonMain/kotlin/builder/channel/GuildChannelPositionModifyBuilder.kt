@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -53,19 +52,13 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
      * The new parent of this channel, has to be a category.
      *
      * **Only one channel can have a parent id modified per request**.
-     *
-     * This field is not officially supported by the Discord API, and might change/be removed in the future.
      */
-    @KordExperimental
     public var parentId: Snowflake? by ::_parentId.delegate()
 
     /**
      * Locks the permissions of this channel to the new category it is moved to.
      * Only works if [parentId] is set.
-     *
-     * This field is not officially supported by the Discord API, and might change/be removed in the future.
      */
-    @KordExperimental
     public var lockPermissionsToParent: Boolean? by ::_lockPermissionsToParent.delegate()
 
     public fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(

@@ -1,7 +1,6 @@
 package dev.kord.core.behavior
 
 import dev.kord.cache.api.query
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
 import dev.kord.common.entity.Permission.ManageGuild
@@ -342,7 +341,6 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    @KordExperimental
     public fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
         kord.rest.guild.getGuildMembers(id, query, limit).forEach {
             emit(

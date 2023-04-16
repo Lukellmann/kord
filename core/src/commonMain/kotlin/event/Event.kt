@@ -1,6 +1,5 @@
 package dev.kord.core.event
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.entity.Strategizable
@@ -48,7 +47,6 @@ public interface Event : KordObject {
      * Note that [withStrategy][Strategizable.withStrategy] for [strategizable][Strategizable] [Event]s will copy
      * [customContext] only by reference. This should be considered when inserting mutable objects into [customContext].
      */
-    @KordPreview
     public val customContext: Any?
 }
 

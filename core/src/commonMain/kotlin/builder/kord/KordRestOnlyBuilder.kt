@@ -1,6 +1,7 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 
@@ -13,7 +14,7 @@ public class KordRestOnlyBuilder(public override var token: String) : RestOnlyBu
     private var id: Snowflake? = null
 
     override var applicationId: Snowflake
-        get() = id ?: getBotIdFromToken(token)
+        get() = id ?: @OptIn(KordInternal::class) getBotIdFromToken(token)
         set(value) {
             id = value
         }

@@ -2,6 +2,7 @@ package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -212,6 +213,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
      */
     public open suspend fun build(): Kord = buildBase()
 
+    @OptIn(KordInternal::class)
     protected suspend fun buildBase(): Kord {
         val client = httpClient.configure()
 

@@ -1,6 +1,7 @@
 package dev.kord.gateway
 
 import dev.kord.common.KordConfiguration
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.http.HttpEngine
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
@@ -27,7 +28,7 @@ public class DefaultGatewayBuilder {
     public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     public fun build(): DefaultGateway {
-        val client = client ?: HttpClient(HttpEngine) {
+        val client = client ?: HttpClient(@OptIn(KordInternal::class) HttpEngine) {
             install(WebSockets)
             install(ContentNegotiation) {
                 json()

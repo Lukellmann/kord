@@ -1,6 +1,7 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -52,6 +53,7 @@ public abstract class RestOnlyBuilder {
     }
 
     public fun build(): Kord {
+        @OptIn(KordInternal::class)
         val client = httpClient.configure()
         val selfId = applicationId
 

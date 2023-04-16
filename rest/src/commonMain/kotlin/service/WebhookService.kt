@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.Snowflake
@@ -120,7 +119,6 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
         }
     }
 
-    @KordExperimental
     public suspend fun executeSlackWebhook(
         webhookId: Snowflake,
         token: String,
@@ -132,7 +130,6 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
         body(JsonObject.serializer(), body)
     }
 
-    @KordExperimental
     public suspend fun executeGithubWebhook(
         webhookId: Snowflake,
         token: String,
