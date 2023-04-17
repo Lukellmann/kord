@@ -28,6 +28,7 @@ import dev.kord.rest.request.*
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
+import io.ktor.client.engine.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -63,6 +64,8 @@ private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
 public expect class KordBuilder(token: String) : BaseKordBuilder
+
+internal expect fun HttpClientEngineConfig.isCIOEngineConfigAndHasTooFewConnections(shards: Int): Boolean
 
 public abstract class BaseKordBuilder internal constructor(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
@@ -240,6 +243,25 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
         val recommendedShards = gatewayInfo.shards
         val shardsInfo = shardsBuilder(recommendedShards)
         val shards = shardsInfo.indices.toList()
+
+        if (client.engine.config.isCIOEngineConfigAndHasTooFewConnections(shards.size)) {
+            logger.warn {
+                """
+                Kord's http client is
+                
+                val kord = Kord(token) {
+                    httpClient = HttpClient(CIO) {
+                        engine {
+                            maxConnectionsCount = 1
+                            endpoint {
+                                maxConnectionsPerRoute = 1
+                            }
+                        }
+                    }
+                }
+                """.trimIndent()
+            }
+        }
 
         if (client.engine.config.threadsCount < shards.size + 1) {
             logger.warn {

@@ -10,11 +10,18 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
 import kotlinx.serialization.json.Json
 
+private val KORD_JSON = Json {
+    encodeDefaults = false
+    allowStructuredMapKeys = true
+    ignoreUnknownKeys = true
+    isLenient = true
+}
+
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
 
     install(ContentNegotiation) {
-        json()
+        json(KORD_JSON)
     }
     install(WebSockets)
 }
@@ -26,18 +33,8 @@ public fun HttpClient?.configure(): HttpClient {
         defaultConfig()
     }
 
-    val json = Json {
-        encodeDefaults = false
-        allowStructuredMapKeys = true
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     return HttpClient(HttpEngine) {
         defaultConfig()
-        install(ContentNegotiation) {
-            json(json)
-        }
     }
 }
 

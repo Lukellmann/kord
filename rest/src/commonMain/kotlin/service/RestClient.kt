@@ -31,6 +31,7 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val webhook: WebhookService = WebhookService(requestHandler)
 
     // topics
+    public val gateway: GatewayService = GatewayService(requestHandler)
     public val application: ApplicationService = ApplicationService(requestHandler)
 
     /**
