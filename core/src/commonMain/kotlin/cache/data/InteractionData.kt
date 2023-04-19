@@ -11,7 +11,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable
 public data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
@@ -82,7 +81,6 @@ public data class ResolvedObjectsData(
     }
 }
 
-@Serializable
 public data class ApplicationInteractionData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
@@ -122,11 +120,10 @@ public data class ApplicationInteractionData(
 }
 
 
-@Serializable
 public data class OptionData(
     val name: String,
-    val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+    val value: Optional<CommandArgument<Any>> = Optional.Missing(),
+    val values: Optional<List<CommandArgument<Any>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
     val focused: OptionalBoolean = OptionalBoolean.Missing
 ) {
@@ -149,6 +146,7 @@ public data class OptionData(
  * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
  * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
+@Deprecated("This is no longer used, deprecated without replacement.", level = DeprecationLevel.WARNING)
 @KordExperimental
 public object NotSerializable : KSerializer<Any?> {
     override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
