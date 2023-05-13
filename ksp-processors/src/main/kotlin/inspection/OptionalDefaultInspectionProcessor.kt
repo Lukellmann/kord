@@ -1,8 +1,8 @@
 package dev.kord.ksp.inspection
 
-import com.google.devtools.ksp.findActualType
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
+import dev.kord.ksp.classDeclaration
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.isClassifierReference
 import kotlinx.serialization.Serializable
@@ -32,21 +32,15 @@ private class OptionalDefaultInspectionProcessor(private val logger: KSPLogger) 
     }
 
     private fun KSClassDeclaration.verifySerializableClassPrimaryConstructor() {
-        primaryConstructor?.parameters?.forEach { parameter ->
-            if (parameter.hasDefault) return@forEach
-
-            val type = parameter.type
-            if (type.element?.isClassifierReference == false) return@forEach
-
-            val clazz = when (val declaration = type.resolve().declaration) {
-                is KSTypeParameter -> return@forEach
-                is KSClassDeclaration -> declaration
-                is KSTypeAlias -> declaration.findActualType()
-                else -> error("Unexpected KSDeclaration: $declaration")
+        primaryConstructor?.parameters
+            ?.filterNot { it.hasDefault }
+            ?.filter {
+                val type = it.type
+                type.element?.isClassifierReference() != false
+                    && type.resolve().classDeclaration?.qualifiedName?.asString() in OPTIONAL_TYPES
             }
-            if (clazz.qualifiedName?.asString() in OPTIONAL_TYPES) {
-                logger.error("Missing default for parameter ${parameter.name?.asString()}.", symbol = parameter)
+            ?.forEach {
+                logger.error("Missing default for parameter '${it.name?.asString()}'.", symbol = it)
             }
-        }
     }
 }

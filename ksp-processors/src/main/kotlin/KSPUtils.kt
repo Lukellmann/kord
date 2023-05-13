@@ -10,6 +10,7 @@ import kotlin.reflect.KProperty1
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
     getSymbolsWithAnnotation(A::class.qualifiedName!!, inDepth)
 
+// todo nested
 internal fun Resolver.getNewClasses() = getNewFiles().flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
 
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = isOfType(A::class.qualifiedName!!)
@@ -56,12 +57,18 @@ private inline fun <reified E : Enum<E>> KSType.toEnumEntry(): E {
     return enumValueOf(name.getShortName())
 }
 
-@Suppress("RecursivePropertyAccessor")
-internal val KSReferenceElement.isClassifierReference: Boolean
-    get() = when (this) {
-        is KSDynamicReference, is KSCallableReference -> false
-        is KSClassifierReference -> true
-        is KSDefNonNullReference -> enclosedType.isClassifierReference
-        is KSParenthesizedReference -> element.isClassifierReference
-        else -> error("Unexpected KSReferenceElement: $this")
+internal tailrec fun KSReferenceElement.isClassifierReference(): Boolean = when (this) {
+    is KSDynamicReference, is KSCallableReference -> false
+    is KSClassifierReference -> true
+    is KSDefNonNullReference -> enclosedType.isClassifierReference()
+    is KSParenthesizedReference -> element.isClassifierReference()
+    else -> error("Unexpected KSReferenceElement: $this")
+}
+
+internal val KSType.classDeclaration
+    get() = when (val declaration = declaration) {
+        is KSTypeParameter -> null
+        is KSClassDeclaration -> declaration
+        is KSTypeAlias -> declaration.findActualType()
+        else -> error("Unexpected KSDeclaration: $declaration")
     }
