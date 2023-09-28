@@ -4747,22 +4747,28 @@ public final class dev/kord/core/cache/data/PresenceDataKt {
 
 public final class dev/kord/core/cache/data/ReactionData {
 	public static final field Companion Ldev/kord/core/cache/data/ReactionData$Companion;
-	public synthetic fun <init> (IIZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (IZLdev/kord/common/entity/Snowflake;Ljava/lang/String;Z)V
-	public synthetic fun <init> (IZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLjava/util/List;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
-	public final fun component2 ()Z
-	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Z
-	public final fun copy (IZLdev/kord/common/entity/Snowflake;Ljava/lang/String;Z)Ldev/kord/core/cache/data/ReactionData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/ReactionData;IZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZILjava/lang/Object;)Ldev/kord/core/cache/data/ReactionData;
+	public final fun component2 ()Ldev/kord/common/entity/ReactionCountDetails;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/util/List;
+	public final fun copy (ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLjava/util/List;)Ldev/kord/core/cache/data/ReactionData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/ReactionData;ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/Snowflake;Ljava/lang/String;ZLjava/util/List;ILjava/lang/Object;)Ldev/kord/core/cache/data/ReactionData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBurstColors ()Ljava/util/List;
 	public final fun getCount ()I
+	public final fun getCountDetails ()Ldev/kord/common/entity/ReactionCountDetails;
 	public final fun getEmojiAnimated ()Z
 	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getEmojiName ()Ljava/lang/String;
 	public final fun getMe ()Z
+	public final fun getMeBurst ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ReactionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -6949,11 +6955,14 @@ public final class dev/kord/core/entity/Presence : dev/kord/core/KordObject, dev
 public final class dev/kord/core/entity/Reaction : dev/kord/core/KordObject {
 	public fun <init> (Ldev/kord/core/cache/data/ReactionData;Ldev/kord/core/Kord;)V
 	public final fun getCount ()I
+	public final fun getCountDetails ()Ldev/kord/common/entity/ReactionCountDetails;
 	public final fun getData ()Ldev/kord/core/cache/data/ReactionData;
 	public final fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getSelfReacted ()Z
+	public final fun getSelfSuperReacted ()Z
+	public final fun getSuperReactionColors ()Ljava/util/List;
 	public final fun isAnimated ()Z
 	public fun toString ()Ljava/lang/String;
 }

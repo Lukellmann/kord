@@ -1,6 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.ReactionCountDetails
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
@@ -132,8 +133,17 @@ public class LiveMessage(
         val present = message.data.reactions.orEmpty()
             .firstOrNull { it.emojiName == name && it.emojiId == id }
 
-        val reactions = when (present) {
-            null -> message.data.reactions.orEmpty() + ReactionData(1, event.userId == kord.selfId, id, name, animated)
+        val reactions = when (present) { // TODO
+            null -> message.data.reactions.orEmpty() + ReactionData(
+                count = 1,
+                countDetails = ReactionCountDetails(burst = 0, normal = 1),
+                me = event.userId == kord.selfId,
+                meBurst = false,
+                emojiId = id,
+                emojiName = name,
+                emojiAnimated = animated,
+                burstColors = emptyList(),
+            )
             else -> {
                 val updated = present.copy(count = present.count + 1)
                 message.data.reactions.orEmpty() - present + updated

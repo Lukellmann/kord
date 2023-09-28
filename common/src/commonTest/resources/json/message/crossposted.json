@@ -2,11 +2,21 @@
   "reactions": [
     {
       "count": 1,
+      "count_details": {
+        "burst": 1,
+        "normal": 0
+      },
       "me": false,
+      "me_burst": false,
       "emoji": {
         "id": null,
         "name": "🔥"
-      }
+      },
+      "burst_colors": [
+        "#000000",
+        "#901a1a",
+        "#b02020"
+      ]
     }
   ],
   "attachments": [],

@@ -548,6 +548,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Reaction was blocked. */
     ReactionBlocked(90001),
 
+    /** User cannot use burst reactions. */
+    CannotUseBurstReactions(90002),
+
     /** Application not yet available. Try again later. */
     ApplicationNotAvailable(110001),
 

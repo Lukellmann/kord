@@ -1,5 +1,7 @@
 package dev.kord.core.entity
 
+import dev.kord.common.Color
+import dev.kord.common.entity.ReactionCountDetails
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -12,15 +14,18 @@ public class Reaction(public val data: ReactionData, override val kord: Kord) : 
 
     public val id: Snowflake? get() = data.emojiId
 
-    /**
-     * The amount of users that reacted this emoji to the message.
-     */
+    /** The total number of times this emoji has been used to react (including super reactions). */
     public val count: Int get() = data.count
+
+    public val countDetails: ReactionCountDetails get() = data.countDetails
 
     /**
      * Whether the current user reacted to the message with this emoji.
      */
     public val selfReacted: Boolean get() = data.me
+
+    /** Whether the current user super-reacted to the message with this emoji. */
+    public val selfSuperReacted: Boolean get() = data.meBurst
 
     /**
      * The emoji of this reaction.
@@ -30,6 +35,9 @@ public class Reaction(public val data: ReactionData, override val kord: Kord) : 
             null -> ReactionEmoji.Unicode(data.emojiName!!)
             else -> ReactionEmoji.Custom(data.emojiId, data.emojiName ?: "", data.emojiAnimated)
         }
+
+    /** The colors used for super reaction. */
+    public val superReactionColors: List<Color> get() = data.burstColors
 
     /**
      * Whether the emoji is animated.

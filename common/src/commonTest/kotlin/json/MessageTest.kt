@@ -1,5 +1,6 @@
 package dev.kord.common.json
 
+import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
@@ -21,11 +22,17 @@ class MessageTest {
             reactions.value!!.size shouldBe 1
             with(reactions.value!!.first()) {
                 count shouldBe 1
+                with(countDetails) {
+                    burst shouldBe 0
+                    normal shouldBe 1
+                }
                 me shouldBe false
+                meBurst shouldBe false
                 with(emoji) {
                     id shouldBe null
                     name shouldBe "🔥"
                 }
+                burstColors shouldBe emptyList()
             }
             attachments shouldBe emptyList()
             tts shouldBe false
@@ -61,11 +68,17 @@ class MessageTest {
             reactions.value!!.size shouldBe 1
             with(reactions.value!!.first()) {
                 count shouldBe 1
+                with(countDetails) {
+                    burst shouldBe 1
+                    normal shouldBe 0
+                }
                 me shouldBe false
+                meBurst shouldBe false
                 with(emoji) {
                     id shouldBe null
                     name shouldBe "🔥"
                 }
+                burstColors shouldBe listOf(Color(0), Color(0x901a1a), Color(0xb02020))
             }
             attachments shouldBe emptyList()
             tts shouldBe false

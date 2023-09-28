@@ -124,6 +124,8 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Color
+import dev.kord.common.ColorAsHexSerializer
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -620,8 +622,22 @@ public data class DiscordEmbed(
 @Serializable
 public data class Reaction(
     val count: Int,
+    @SerialName("count_details")
+    val countDetails: ReactionCountDetails,
     val me: Boolean,
+    @SerialName("me_burst")
+    val meBurst: Boolean,
     val emoji: DiscordEmoji,
+    @SerialName("burst_colors")
+    val burstColors: List<@Serializable(with = ColorAsHexSerializer::class) Color>,
+)
+
+@Serializable
+public data class ReactionCountDetails(
+    /** The count of super reactions. */
+    val burst: Int,
+    /** The count of normal reactions. */
+    val normal: Int,
 )
 
 @Serializable

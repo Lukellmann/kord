@@ -8395,17 +8395,23 @@ public final class dev/kord/common/entity/PresenceStatus$Unknown : dev/kord/comm
 
 public final class dev/kord/common/entity/Reaction {
 	public static final field Companion Ldev/kord/common/entity/Reaction$Companion;
-	public synthetic fun <init> (IIZLdev/kord/common/entity/DiscordEmoji;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (IZLdev/kord/common/entity/DiscordEmoji;)V
+	public synthetic fun <init> (IILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/DiscordEmoji;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/DiscordEmoji;Ljava/util/List;)V
 	public final fun component1 ()I
-	public final fun component2 ()Z
-	public final fun component3 ()Ldev/kord/common/entity/DiscordEmoji;
-	public final fun copy (IZLdev/kord/common/entity/DiscordEmoji;)Ldev/kord/common/entity/Reaction;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/Reaction;IZLdev/kord/common/entity/DiscordEmoji;ILjava/lang/Object;)Ldev/kord/common/entity/Reaction;
+	public final fun component2 ()Ldev/kord/common/entity/ReactionCountDetails;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ldev/kord/common/entity/DiscordEmoji;
+	public final fun component6 ()Ljava/util/List;
+	public final fun copy (ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/DiscordEmoji;Ljava/util/List;)Ldev/kord/common/entity/Reaction;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/Reaction;ILdev/kord/common/entity/ReactionCountDetails;ZZLdev/kord/common/entity/DiscordEmoji;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/Reaction;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBurstColors ()Ljava/util/List;
 	public final fun getCount ()I
+	public final fun getCountDetails ()Ldev/kord/common/entity/ReactionCountDetails;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordEmoji;
 	public final fun getMe ()Z
+	public final fun getMeBurst ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final synthetic fun write$Self (Ldev/kord/common/entity/Reaction;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -8423,6 +8429,37 @@ public final class dev/kord/common/entity/Reaction$$serializer : kotlinx/seriali
 }
 
 public final class dev/kord/common/entity/Reaction$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ReactionCountDetails {
+	public static final field Companion Ldev/kord/common/entity/ReactionCountDetails$Companion;
+	public fun <init> (II)V
+	public synthetic fun <init> (IIILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun copy (II)Ldev/kord/common/entity/ReactionCountDetails;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/ReactionCountDetails;IIILjava/lang/Object;)Ldev/kord/common/entity/ReactionCountDetails;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBurst ()I
+	public final fun getNormal ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Ldev/kord/common/entity/ReactionCountDetails;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/common/entity/ReactionCountDetails$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/ReactionCountDetails$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ReactionCountDetails;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ReactionCountDetails;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ReactionCountDetails$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
