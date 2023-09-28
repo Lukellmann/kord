@@ -4,6 +4,7 @@ import dev.kord.common.entity.ApplicationFlags
 import dev.kord.common.entity.InstallParams
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -11,9 +12,9 @@ import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.BaseApplicationData
 import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.event.guild.InviteCreateEvent
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 public sealed class BaseApplication(
     final override val kord: Kord,
@@ -59,6 +60,9 @@ public sealed class BaseApplication(
     public val coverImageHash: String? get() = data.coverImage.value
 
     public val flags: ApplicationFlags? get() = data.flags.value
+
+    /** An approximate count of the app's guild membership. */
+    public val approximateGuildCount: Int? get() = data.approximateGuildCount.value
 
     /** Tags describing the content and functionality of the application. */
     public val tags: List<String> get() = data.tags.value.orEmpty()

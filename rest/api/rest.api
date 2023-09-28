@@ -6646,6 +6646,10 @@ public final class dev/kord/rest/route/Route$Companion {
 	public final fun getBaseUrl ()Ljava/lang/String;
 }
 
+public final class dev/kord/rest/route/Route$CurrentApplicationGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$CurrentApplicationGet;
+}
+
 public final class dev/kord/rest/route/Route$CurrentApplicationInfo : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$CurrentApplicationInfo;
 }

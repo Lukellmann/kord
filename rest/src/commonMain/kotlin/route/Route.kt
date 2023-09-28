@@ -111,6 +111,15 @@ public sealed class Route<T>(
 
 
     /*
+     * Application
+     * https://discord.com/developers/docs/resources/application
+     */
+
+    public object CurrentApplicationGet :
+        Route<DiscordApplication>(HttpMethod.Get, "/applications/@me", DiscordApplication.serializer())
+
+
+    /*
      * Application Role Connection Metadata:
      * https://discord.com/developers/docs/resources/application-role-connection-metadata
      */
