@@ -42,6 +42,22 @@
 )
 
 @file:Generate(
+    INT_KORD_ENUM, name = "InteractionContextType",
+    kDoc = "Context in Discord where an interaction can be used, or where it was triggered from. Details about using " +
+        "interaction contexts for application commands is in the [commands·context·documentation]" +
+        "(https://discord.com/developers/docs/interactions/application-commands#interaction-contexts).",
+    docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types",
+    entries = [
+        Entry("Guild", intValue = 0, kDoc = "Interaction can be used within servers."),
+        Entry("BotDm", intValue = 1, kDoc = "Interaction can be used within DMs with the app's bot user."),
+        Entry(
+            "PrivateChannel", intValue = 2,
+            kDoc = "Interaction can be used within Group DMs and DMs other than the app's bot user.",
+        ),
+    ],
+)
+
+@file:Generate(
     INT_KORD_ENUM, name = "InteractionResponseType", valueName = "type",
     docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type",
     entries = [

@@ -1,4 +1,15 @@
 @file:Generate(
+    INT_KORD_ENUM, name = "ApplicationIntegrationType",
+    kDoc = "Where an app can be installed, also called its supported [installation·contexts]" +
+        "(https://discord.com/developers/docs/resources/application#installation-context).",
+    docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-integration-types",
+    entries = [
+        Entry("GuildInstall", intValue = 0, kDoc = "App is installable to servers."),
+        Entry("UserInstall", intValue = 1, kDoc = "App is installable to users."),
+    ],
+)
+
+@file:Generate(
     INT_FLAGS, name = "ApplicationFlag", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
     entries = [
@@ -60,6 +71,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

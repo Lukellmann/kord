@@ -697,6 +697,32 @@ public final class dev/kord/common/entity/ApplicationFlags$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class dev/kord/common/entity/ApplicationIntegrationType {
+	public static final field Companion Ldev/kord/common/entity/ApplicationIntegrationType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/ApplicationIntegrationType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ApplicationIntegrationType;
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ApplicationIntegrationType$GuildInstall : dev/kord/common/entity/ApplicationIntegrationType {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationIntegrationType$GuildInstall;
+}
+
+public final class dev/kord/common/entity/ApplicationIntegrationType$Unknown : dev/kord/common/entity/ApplicationIntegrationType {
+}
+
+public final class dev/kord/common/entity/ApplicationIntegrationType$UserInstall : dev/kord/common/entity/ApplicationIntegrationType {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationIntegrationType$UserInstall;
+}
+
 public abstract class dev/kord/common/entity/ApplicationRoleConnectionMetadataType {
 	public static final field Companion Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -6924,6 +6950,36 @@ public final class dev/kord/common/entity/InteractionCallbackData$$serializer : 
 
 public final class dev/kord/common/entity/InteractionCallbackData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class dev/kord/common/entity/InteractionContextType {
+	public static final field Companion Ldev/kord/common/entity/InteractionContextType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/InteractionContextType$BotDm : dev/kord/common/entity/InteractionContextType {
+	public static final field INSTANCE Ldev/kord/common/entity/InteractionContextType$BotDm;
+}
+
+public final class dev/kord/common/entity/InteractionContextType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/InteractionContextType;
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/InteractionContextType$Guild : dev/kord/common/entity/InteractionContextType {
+	public static final field INSTANCE Ldev/kord/common/entity/InteractionContextType$Guild;
+}
+
+public final class dev/kord/common/entity/InteractionContextType$PrivateChannel : dev/kord/common/entity/InteractionContextType {
+	public static final field INSTANCE Ldev/kord/common/entity/InteractionContextType$PrivateChannel;
+}
+
+public final class dev/kord/common/entity/InteractionContextType$Unknown : dev/kord/common/entity/InteractionContextType {
 }
 
 public abstract class dev/kord/common/entity/InteractionResponseType {
