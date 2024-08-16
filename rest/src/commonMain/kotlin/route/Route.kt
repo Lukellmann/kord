@@ -740,47 +740,6 @@ public sealed class Route<T>(
 
 
     /*
-     * Entitlements:
-     * https://discord.com/developers/docs/monetization/entitlements
-     */
-
-    public object EntitlementConsume :
-        Route<Unit>(
-            HttpMethod.Post,
-            "/applications/$ApplicationId/entitlements/$EntitlementId/consume",
-            NoStrategy
-        )
-
-    public object EntitlementsList :
-        Route<List<DiscordEntitlement>>(
-            HttpMethod.Get,
-            "/applications/$ApplicationId/entitlements",
-            ListSerializer(DiscordEntitlement.serializer())
-        )
-
-    public object EntitlementGet :
-        Route<DiscordEntitlement>(
-            HttpMethod.Get,
-            "/applications/$ApplicationId/entitlements/$EntitlementId",
-            DiscordEntitlement.serializer()
-        )
-
-    public object TestEntitlementCreate :
-        Route<DiscordEntitlement>(
-            HttpMethod.Post,
-            "/applications/$ApplicationId/entitlements",
-            DiscordEntitlement.serializer()
-        )
-
-    public object TestEntitlementDelete :
-        Route<Unit>(
-            HttpMethod.Delete,
-            "/applications/$ApplicationId/entitlements/$EntitlementId",
-            NoStrategy
-        )
-
-
-    /*
      * SKUs:
      * https://discord.com/developers/docs/monetization/skus
      */
@@ -789,8 +748,42 @@ public sealed class Route<T>(
         Route<List<DiscordSku>>(
             HttpMethod.Get,
             "/applications/$ApplicationId/skus",
-            ListSerializer(DiscordSku.serializer())
+            ListSerializer(DiscordSku.serializer()),
         )
+
+
+    /*
+     * Entitlements:
+     * https://discord.com/developers/docs/monetization/entitlements
+     */
+
+    public object EntitlementGet :
+        Route<DiscordEntitlement>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/entitlements/$EntitlementId",
+            DiscordEntitlement.serializer(),
+        )
+
+    public object EntitlementsList :
+        Route<List<DiscordEntitlement>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/entitlements",
+            ListSerializer(DiscordEntitlement.serializer()),
+        )
+
+    public object EntitlementConsume :
+        Route<Unit>(HttpMethod.Post, "/applications/$ApplicationId/entitlements/$EntitlementId/consume", NoStrategy)
+
+    public object TestEntitlementCreate :
+        Route<DiscordEntitlement>(
+            HttpMethod.Post,
+            "/applications/$ApplicationId/entitlements",
+            DiscordEntitlement.serializer(),
+        )
+
+    public object TestEntitlementDelete :
+        Route<Unit>(HttpMethod.Delete, "/applications/$ApplicationId/entitlements/$EntitlementId", NoStrategy)
+
 
     /*
      * Guild Template:

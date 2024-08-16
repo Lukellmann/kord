@@ -186,10 +186,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         )
 
 
-    override fun getGlobalApplicationCommands(
-        applicationId: Snowflake,
-        withLocalizations: Boolean?
-    ): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
         first.getGlobalApplicationCommands(applicationId, withLocalizations)
             .switchIfEmpty(second.getGlobalApplicationCommands(applicationId, withLocalizations))
 
@@ -282,14 +279,12 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
 
     override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
-        first.getEntitlementOrNull(applicationId, entitlementId) ?: second.getEntitlementOrNull(
-            applicationId,
-            entitlementId
-        )
+        first.getEntitlementOrNull(applicationId, entitlementId)
+            ?: second.getEntitlementOrNull(applicationId, entitlementId)
 
-    override suspend fun getEntitlements(
+    override fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest
+        request: EntitlementsListRequest,
     ): Flow<Entitlement> = first.getEntitlements(applicationId, request)
         .switchIfEmpty(second.getEntitlements(applicationId, request))
 

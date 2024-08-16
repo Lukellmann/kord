@@ -10,8 +10,8 @@ import dev.kord.core.hash
 /**
  * An instance of a [Discord Sku](https://discord.com/developers/docs/monetization/skus).
  *
- * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s or
- * [Guild]s.
+ * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s
+ * or [Guild]s.
  */
 public class Sku(
     public val data: DiscordSku,
@@ -36,7 +36,7 @@ public class Sku(
     public val name: String get() = data.name
 
     /**
-     * System-generated URL slug based on the SKU's name
+     * System-generated URL slug based on the SKU's name.
      */
     public val slug: String get() = data.slug
 
@@ -45,14 +45,10 @@ public class Sku(
      */
     public val flags: SkuFlags get() = data.flags
 
+    override fun equals(other: Any?): Boolean =
+        other is Sku && this.id == other.id && this.applicationId == other.applicationId
+
     override fun hashCode(): Int = hash(id, applicationId)
 
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Sku -> other.id == id && other.applicationId == applicationId
-        else -> false
-    }
-
-    override fun toString(): String {
-        return "Sku(data=$data, kord=$kord)"
-    }
+    override fun toString(): String = "Sku(data=$data, kord=$kord)"
 }

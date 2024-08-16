@@ -14,7 +14,7 @@ import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 
 /**
- * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements#entitlement-resource).
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements).
  *
  * Entitlements represent that a [User] or [Guild] has access to a premium offering in your [Application].
  */
@@ -63,22 +63,16 @@ public class Entitlement(
         get() = data.deleted
 
     /**
-     * The start date at which the entitlement is valid.
+     * The start date at which the entitlement is valid. Not present when using [test entitlements][isTest].
      */
     public val startsAt: Instant?
         get() = data.startsAt.value
 
     /**
-     * Date at which the entitlement is no longer valid
+     * The date at which the entitlement is no longer valid. Not present when using [test entitlements][isTest].
      */
     public val endsAt: Instant?
         get() = data.endsAt.value
-
-    /**
-     * For consumable items, whether the entitlement has been consumed.
-     */
-    public val isConsumed: Boolean?
-        get() = data.consumed.value
 
     /**
      * The ID of the [Guild] that is granted access to this entitlement's [Sku].
@@ -93,6 +87,12 @@ public class Entitlement(
         get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
+     * For consumable items, whether the entitlement has been consumed.
+     */
+    public val isConsumed: Boolean?
+        get() = data.consumed.value
+
+    /**
      * Whether this entitlement is a test entitlement.
      */
     public val isTest: Boolean
@@ -105,7 +105,7 @@ public class Entitlement(
      * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
      * entitlement to your premium offering.
      *
-     * This request will fail if this is not a test entitlement.
+     * This request will fail if this is not a [test entitlement][Entitlement.isTest].
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
@@ -114,7 +114,7 @@ public class Entitlement(
     }
 
     /**
-     * For One-Time Purchase consumable SKUs, marks a given entitlement for the user as consumed.
+     * For One-Time Purchase consumable [Sku]s, marks this entitlement for the [user] as [consumed][isConsumed].
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
@@ -125,14 +125,10 @@ public class Entitlement(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Entitlement =
         Entitlement(data, kord, strategy.supply(kord))
 
+    override fun equals(other: Any?): Boolean =
+        other is Entitlement && this.id == other.id && this.applicationId == other.applicationId
+
     override fun hashCode(): Int = hash(id, applicationId)
 
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Entitlement -> other.id == id && other.applicationId == applicationId
-        else -> false
-    }
-
-    override fun toString(): String {
-        return "Entitlement(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "Entitlement(data=$data, kord=$kord, supplier=$supplier)"
 }

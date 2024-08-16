@@ -33,20 +33,11 @@ public sealed interface Interaction : InteractionBehavior {
     override val token: String get() = data.token
 
     /**
-     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any entitlements for the
-     * invoking user, representing access to premium [Sku]s.
-     */
-    public val entitlements: List<Entitlement>
-        get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
-
-    /**
      * The type of the interaction.
      */
     public val type: InteractionType get() = data.type
 
-    /**
-     * The invoker of the interaction.
-     */
+    /** The invoker of the interaction. */
     public val user: User
 
     /**
@@ -66,6 +57,12 @@ public sealed interface Interaction : InteractionBehavior {
      */
     public val version: Int get() = data.version
 
+    /**
+     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any [Entitlement]s for the
+     * [invoking user][user], representing access to premium [Sku]s.
+     */
+    public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 
     public companion object {
@@ -84,7 +81,6 @@ public sealed interface Interaction : InteractionBehavior {
                     GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
                 }
             }
-
             InteractionType.Ping, is InteractionType.Unknown -> error("Unsupported interaction type: $type")
         }
     }

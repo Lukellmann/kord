@@ -14,7 +14,7 @@ public class EntitlementsListRequestBuilder : RequestBuilder<EntitlementsListReq
     public var userId: Snowflake? = null
 
     /**
-     * An optional list of SKU iDs to check entitlements for.
+     * An optional list of SKU IDs to check entitlements for.
      */
     public var skuIds: MutableList<Snowflake> = mutableListOf()
 
@@ -24,12 +24,26 @@ public class EntitlementsListRequestBuilder : RequestBuilder<EntitlementsListReq
     public var position: Position.BeforeOrAfter? = null
 
     /**
+     * Retrieve entitlements before the specified entitlement [id].
+     */
+    public fun before(id: Snowflake) {
+        position = Position.Before(id)
+    }
+
+    /**
+     * Retrieve entitlements after the specified entitlement [id].
+     */
+    public fun after(id: Snowflake) {
+        position = Position.After(id)
+    }
+
+    /**
      * The maximum number of entitlements to return.
      */
     public var limit: Int? = null
 
     /**
-     * The guild ID to check entitlements for.
+     * The guild ID to look up entitlements for.
      */
     public var guildId: Snowflake? = null
 
@@ -38,14 +52,6 @@ public class EntitlementsListRequestBuilder : RequestBuilder<EntitlementsListReq
      */
     public var excludeEnded: Boolean? = null
 
-    public fun after(id: Snowflake) {
-        position = Position.After(id)
-    }
-
-    public fun before(id: Snowflake) {
-        position = Position.Before(id)
-    }
-
     override fun toRequest(): EntitlementsListRequest =
-        EntitlementsListRequest(userId, skuIds, position, limit, guildId, excludeEnded)
+        EntitlementsListRequest(userId, skuIds.toList(), position, limit, guildId, excludeEnded)
 }

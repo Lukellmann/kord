@@ -1,6 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
+import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -44,7 +45,11 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // interactions
     private inline val interaction get() = kord.rest.interaction
 
+    // monetization
+    private inline val entitlement get() = kord.rest.entitlement
+
     // resources
+    private inline val application get() = kord.rest.application
     private inline val auditLog get() = kord.rest.auditLog
     private inline val autoModeration get() = kord.rest.autoModeration
     private inline val channel get() = kord.rest.channel
@@ -57,13 +62,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val user get() = kord.rest.user
     private inline val voice get() = kord.rest.voice
     private inline val webhook get() = kord.rest.webhook
-
-    // topics
-    private inline val application get() = kord.rest.application
-
-    // monetization
-    private inline val sku get() = kord.rest.sku
-    private inline val entitlement get() = kord.rest.entitlement
 
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
@@ -447,10 +445,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(
-        applicationId: Snowflake,
-        withLocalizations: Boolean?
-    ): Flow<GlobalApplicationCommand> = flow {
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
         for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))
@@ -659,20 +654,21 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
 
     // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
-    override suspend fun getEntitlements(
+    override fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest
+        request: EntitlementsListRequest,
     ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
-        paginateForwards(batchSize, idSelector = { it.id }) { position ->
-            entitlement.listEntitlements(
-                applicationId = applicationId,
-                request = request.copy(position = position, limit = batchSize)
-            )
-        }.map {
-            val data = EntitlementData.from(it)
-            Entitlement(data, kord)
+        val req: suspend (Position.BeforeOrAfter) -> List<DiscordEntitlement> = { position ->
+            entitlement.listEntitlements(applicationId, request.copy(position = position, limit = batchSize))
         }
-    }
+        when (val start = request.position) {
+            is Position.After, null ->
+                paginateForwards(batchSize, start = start?.value ?: Snowflake.min, idSelector = { it.id }, req)
+
+            is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
+        }
+    }.map { entitlement -> Entitlement(data = EntitlementData.from(entitlement), kord) }
+
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }

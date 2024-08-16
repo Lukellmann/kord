@@ -380,11 +380,11 @@ public class Kord(
         rest.sku.listSkus(selfId).map { Sku(it, this) }
 
     /**
-     * Requests to get a list of [Entitlement]s.
+     * Requests to get all [Entitlement]s for this application.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend inline fun getEntitlements(
+    public inline fun getEntitlements(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
         builder: EntitlementsListRequestBuilder.() -> Unit = {},
     ): Flow<Entitlement> {
@@ -415,7 +415,15 @@ public class Kord(
         defaultSupplier.getEntitlementOrNull(selfId, id)
 
     /**
-     * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
+     * Requests to create a new [test entitlement][Entitlement.isTest] to a [Sku] with the given [skuId] for an owner
+     * with the given [ownerId] and [ownerType]. Discord will act as though that user or guild has entitlement to your
+     * premium offering.
+     *
+     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
+     * it's valid in perpetuity.
+     *
+     * After creating a test entitlement, you'll need to reload your Discord client. After doing so, you'll see that
+     * your server or user now has premium access.
      *
      * @throws [RestRequestException] if anything went wrong during the request.
      */

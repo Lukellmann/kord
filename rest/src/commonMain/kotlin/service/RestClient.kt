@@ -16,7 +16,12 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     // interactions
     public val interaction: InteractionService = InteractionService(requestHandler)
 
+    // monetization
+    public val sku: SkuService = SkuService(requestHandler)
+    public val entitlement: EntitlementService = EntitlementService(requestHandler)
+
     // resources
+    public val application: ApplicationService = ApplicationService(requestHandler)
     public val applicationRoleConnectionMetadata: ApplicationRoleConnectionMetadataService =
         ApplicationRoleConnectionMetadataService(requestHandler)
     public val auditLog: AuditLogService = AuditLogService(requestHandler)
@@ -31,13 +36,6 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val user: UserService = UserService(requestHandler)
     public val voice: VoiceService = VoiceService(requestHandler)
     public val webhook: WebhookService = WebhookService(requestHandler)
-
-    // topics
-    public val application: ApplicationService = ApplicationService(requestHandler)
-
-    // monetization
-    public val sku: SkuService = SkuService(requestHandler)
-    public val entitlement: EntitlementService = EntitlementService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
