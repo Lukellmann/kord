@@ -1,6 +1,5 @@
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.kotlin.dsl.assign
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -20,12 +19,11 @@ internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     freeCompilerArgs.add("-Xexpect-actual-classes")
 }
 
-internal const val KORD_JVM_TARGET = 8
-
-internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
+internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions(extension: KordExtension) {
     applyKordCommonCompilerOptions()
-    jvmTarget = JVM_1_8
-    freeCompilerArgs.add("-Xjdk-release=1.8")
+    val target = extension.jvmTarget
+    jvmTarget = target
+    freeCompilerArgs.add(target.map { "-Xjdk-release=${it.target}" })
 }
 
 internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {

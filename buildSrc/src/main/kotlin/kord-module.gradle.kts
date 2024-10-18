@@ -8,6 +8,8 @@ plugins {
     `maven-publish`
 }
 
+private val extension = createKordExtension()
+
 repositories {
     mavenCentral()
 }
@@ -23,7 +25,7 @@ apiValidation {
 kotlin {
     explicitApi()
     compilerOptions {
-        applyKordJvmCompilerOptions()
+        applyKordJvmCompilerOptions(extension)
         optIn.addAll(kordOptIns)
     }
 
@@ -42,7 +44,7 @@ tasks {
     }
 
     withType<JavaCompile>().configureEach {
-        options.release = KORD_JVM_TARGET
+        options.release = extension.jvmTargetInt
     }
 }
 

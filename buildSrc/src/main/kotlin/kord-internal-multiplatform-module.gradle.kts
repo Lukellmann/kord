@@ -4,6 +4,8 @@ plugins {
     org.jetbrains.kotlin.multiplatform
 }
 
+private val extension = createKordExtension()
+
 repositories {
     mavenCentral()
 }
@@ -16,7 +18,7 @@ kotlin {
 
     jvm {
         compilerOptions {
-            applyKordJvmCompilerOptions()
+            applyKordJvmCompilerOptions(extension)
         }
     }
     js {

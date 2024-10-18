@@ -2,18 +2,20 @@ plugins {
     org.jetbrains.kotlin.jvm
 }
 
+private val extension = createKordExtension()
+
 repositories {
     mavenCentral()
 }
 
 kotlin {
     compilerOptions {
-        applyKordJvmCompilerOptions()
+        applyKordJvmCompilerOptions(extension)
     }
 }
 
 tasks {
     withType<JavaCompile>().configureEach {
-        options.release = KORD_JVM_TARGET
+        options.release = extension.jvmTargetInt
     }
 }

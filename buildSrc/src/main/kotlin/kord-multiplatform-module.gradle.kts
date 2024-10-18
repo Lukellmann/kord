@@ -10,6 +10,8 @@ plugins {
     com.google.devtools.ksp
 }
 
+private val extension = createKordExtension()
+
 repositories {
     mavenCentral()
 }
@@ -32,7 +34,7 @@ kotlin {
 
     jvm {
         compilerOptions {
-            applyKordJvmCompilerOptions()
+            applyKordJvmCompilerOptions(extension)
         }
     }
     js {
