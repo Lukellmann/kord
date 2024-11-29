@@ -24,13 +24,13 @@
         ),
         Entry(
             "DateTimeLessThanOrEqual", intValue = 5,
-            kDoc = "The metadata value (`ISO8601 string`) is less than or equal to the guild's configured value " +
-                "(`integer`; `days before current date`).",
+            kDoc = "The metadata value (`ISO8601·string`) is less than or equal to the guild's configured value " +
+                "(`integer`; `days·before·current·date`).",
         ),
         Entry(
             "DateTimeGreaterThanOrEqual", intValue = 6,
-            kDoc = "The metadata value (`ISO8601 string`) is greater than or equal to the guild's configured value " +
-                "(`integer`; `days before current date`).",
+            kDoc = "The metadata value (`ISO8601·string`) is greater than or equal to the guild's configured value " +
+                "(`integer`; `days·before·current·date`).",
         ),
         Entry(
             "BooleanEqual", intValue = 7,

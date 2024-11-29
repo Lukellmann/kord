@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -34,8 +33,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ApplicationRoleConnectionMetadataType.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ApplicationRoleConnectionMetadataType.Unknown(value=$value)"
             else "ApplicationRoleConnectionMetadataType.${this::class.simpleName}"
 
     /**
@@ -101,8 +99,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ApplicationRoleConnectionMetadataType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): ApplicationRoleConnectionMetadataType = from(decoder.decodeInt())
     }
 
     public companion object {

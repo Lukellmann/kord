@@ -6,7 +6,7 @@ import js.typedarrays.Uint8Array
 import node.buffer.Buffer
 
 internal external class Inflate {
-    fun process(data: Uint8Array): Buffer
+    fun process(data: Uint8Array<*>): Buffer
 
     fun close()
 }

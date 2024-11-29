@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -612,8 +611,7 @@ public class Permissions internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): Permissions =
-                Permissions(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): Permissions = Permissions(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {
@@ -621,8 +619,7 @@ public class Permissions internal constructor(
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
-                        arrayOf("dev.kord.common.entity.Permissions")),
+            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
@@ -631,8 +628,7 @@ public class Permissions internal constructor(
     @Deprecated(
         level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
-                    arrayOf("dev.kord.common.entity.Permissions")),
+        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Permissions> = Permissions.serializer()

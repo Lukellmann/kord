@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -198,8 +197,7 @@ public class SkuFlags internal constructor(
     /**
      * Checks if this instance of [SkuFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: SkuFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: SkuFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [SkuFlags] that has all bits set that are set in `this` and [flag].
@@ -221,8 +219,7 @@ public class SkuFlags internal constructor(
      * Returns an instance of [SkuFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: SkuFlags): SkuFlags =
-            SkuFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: SkuFlags): SkuFlags = SkuFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [SkuFlags] modified with [builder].
@@ -287,8 +284,7 @@ public class SkuFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): SkuFlags =
-                SkuFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): SkuFlags = SkuFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class IntegrationExpireBehavior(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "IntegrationExpireBehavior.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "IntegrationExpireBehavior.Unknown(value=$value)"
             else "IntegrationExpireBehavior.${this::class.simpleName}"
 
     /**
@@ -56,8 +54,7 @@ public sealed class IntegrationExpireBehavior(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = from(decoder.decodeInt())
     }
 
     public companion object {

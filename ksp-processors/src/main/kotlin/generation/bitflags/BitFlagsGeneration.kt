@@ -38,18 +38,18 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addParameter<Int>("shift")
         }
         addProperty<Int>("shift", PUBLIC) {
-            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", entityCN)
+            addKdoc("The♢position♢of♢the♢bit♢that♢is♢set♢in♢this♢[%T].♢This♢is♢always♢$shiftTest.", entityCN)
             initializer("shift")
         }
         addInitializerBlock {
-            addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
+            addStatement("require(shift $shiftTest) {♢%P♢}", "shift has to be $shiftTest but was \$shift")
         }
         addProperty(valueName, valueCN, PUBLIC) {
-            addKdoc("The raw $valueName used by Discord.")
+            addKdoc("The♢raw♢$valueName♢used♢by♢Discord.")
             getter {
                 when (valueType) {
-                    INT -> addStatement("return 1·shl·shift")
-                    BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+                    INT -> addStatement("return 1 shl shift")
+                    BIT_SET -> addStatement("return %M().also { it[shift] = true }", EMPTY_BIT_SET)
                 }
             }
         }
@@ -63,18 +63,18 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addSharedCompanionObjectContent()
             addFunction("fromShift") {
                 addKdoc(
-                    "Returns an instance of [%1T] with [%1T.shift] equal to the specified [shift].\n\n" +
-                        "@throws IllegalArgumentException if [shift] is not $shiftTest.",
+                    "Returns♢an♢instance♢of♢[%1T]♢with♢[%1T.shift]♢equal♢to♢the♢specified♢[shift].\n\n" +
+                        "@throws♢IllegalArgumentException♢if♢[shift]♢is♢not♢$shiftTest.",
                     entityCN,
                 )
                 addEntryOptIns()
                 addParameter<Int>("shift")
                 returns(entityCN)
-                withControlFlow("return when·(shift)") {
+                withControlFlow("return when (shift)") {
                     for (entry in entriesDistinctByValue) {
-                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                        addStatement("$valueFormat -> ${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
-                    addStatement("else·->·Unknown(shift)")
+                    addStatement("else -> Unknown(shift)")
                 }
             }
         }
@@ -82,32 +82,32 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
     addClass(collectionCN) {
         addCollectionKDoc()
         addAnnotation<Serializable> {
-            addMember("with·=·%T.Serializer::class", collectionCN)
+            addMember("with = %T.Serializer::class", collectionCN)
         }
         primaryConstructor {
             addModifiers(INTERNAL)
             addParameter(valueName, valueCN)
         }
         addProperty(valueName, valueCN, PUBLIC) {
-            addKdoc("The raw $valueName used by Discord.")
+            addKdoc("The♢raw♢$valueName♢used♢by♢Discord.")
             initializer(valueName)
         }
         addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
-            addKdoc("A [Set] of all [%T]s contained in this instance of [%T].", entityCN, collectionCN)
+            addKdoc("A♢[Set]♢of♢all♢[%T]s♢contained♢in♢this♢instance♢of♢[%T].", entityCN, collectionCN)
             getter {
                 withControlFlow("return buildSet") {
                     when (valueType) {
                         INT -> {
-                            addStatement("var·remaining·=·$valueName")
-                            addStatement("var·shift·=·0")
-                            withControlFlow("while·(remaining·!=·0)") {
-                                addStatement("if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))", entityCN)
-                                addStatement("remaining·=·remaining·ushr·1")
+                            addStatement("var remaining = $valueName")
+                            addStatement("var shift = 0")
+                            withControlFlow("while (remaining != 0)") {
+                                addStatement("if ((remaining and 1) != 0) add(%T.fromShift(shift))", entityCN)
+                                addStatement("remaining = remaining ushr 1")
                                 addStatement("shift++")
                             }
                         }
-                        BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
-                            addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", entityCN)
+                        BIT_SET -> withControlFlow("for (shift in 0..<$valueName.size)") {
+                            addStatement("if ($valueName[shift]) add(%T.fromShift(shift))", entityCN)
                         }
                     }
                 }

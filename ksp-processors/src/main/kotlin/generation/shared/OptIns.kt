@@ -14,7 +14,7 @@ internal fun Annotatable.Builder<*>.addEntryOptIns() {
         .flatMap { it.requiresOptInAnnotations }
         .distinct()
         .map { name -> CodeBlock.of("%T::class", ClassName.bestGuess(name)) }
-        .joinToCode()
+        .joinToCode() // TODO separator ",♢" ?
     if (optIns.isNotEmpty()) {
         addAnnotation(OPT_IN) {
             addMember(optIns)

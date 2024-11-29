@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -31,8 +30,7 @@ public sealed class AutoModerationRuleTriggerType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AutoModerationRuleTriggerType.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "AutoModerationRuleTriggerType.Unknown(value=$value)"
             else "AutoModerationRuleTriggerType.${this::class.simpleName}"
 
     /**
@@ -79,8 +77,7 @@ public sealed class AutoModerationRuleTriggerType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType = from(decoder.decodeInt())
     }
 
     public companion object {

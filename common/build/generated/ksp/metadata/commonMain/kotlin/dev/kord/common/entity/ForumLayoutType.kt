@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class ForumLayoutType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ForumLayoutType.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ForumLayoutType.Unknown(value=$value)"
             else "ForumLayoutType.${this::class.simpleName}"
 
     /**

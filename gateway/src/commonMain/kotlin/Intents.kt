@@ -8,186 +8,184 @@
             "Guilds", shift = 0,
             kDoc = """
                 Enables the following events:
-                - [GuildCreate]
-                - [GuildUpdate]
-                - [GuildDelete]
-                - [GuildRoleCreate]
-                - [GuildRoleUpdate]
-                - [GuildRoleDelete]
-                - [ChannelCreate]
-                - [ChannelUpdate]
-                - [ChannelDelete]
-                - [ChannelPinsUpdate]
-                - [ThreadCreate]
-                - [ThreadUpdate]
-                - [ThreadDelete]
-                - [ThreadListSync]
-                - [ThreadMemberUpdate]
-                - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-                [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
-            """,
+                -·[GuildCreate]
+                -·[GuildUpdate]
+                -·[GuildDelete]
+                -·[GuildRoleCreate]
+                -·[GuildRoleUpdate]
+                -·[GuildRoleDelete]
+                -·[ChannelCreate]
+                -·[ChannelUpdate]
+                -·[ChannelDelete]
+                -·[ChannelPinsUpdate]
+                -·[ThreadCreate]
+                -·[ThreadUpdate]
+                -·[ThreadDelete]
+                -·[ThreadListSync]
+                -·[ThreadMemberUpdate]
+                -·[ThreadMembersUpdate] (contains different data depending on which intents are used, see """ +
+                "[here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))",
         ),
         Entry(
             "GuildMembers", shift = 1, requiresOptInAnnotations = [privilegedIntentAnnotation],
             kDoc = """
                 Enables the following events:
-                - [GuildMemberAdd]
-                - [GuildMemberUpdate]
-                - [GuildMemberRemove]
-                - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-                [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
-            """,
+                -·[GuildMemberAdd]
+                -·[GuildMemberUpdate]
+                -·[GuildMemberRemove]
+                -·[ThreadMembersUpdate] (contains different data depending on which intents are used, see """ +
+                "[here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))",
         ),
         Entry(
             "GuildModeration", shift = 2,
             kDoc = """
                 Enables the following events:
-                - [GuildAuditLogEntryCreate]
-                - [GuildBanAdd]
-                - [GuildBanRemove]
+                -·[GuildAuditLogEntryCreate]
+                -·[GuildBanAdd]
+                -·[GuildBanRemove]
             """,
         ),
         Entry(
             "GuildEmojis", shift = 3,
             kDoc = """
                 Enables the following events:
-                - [GuildEmojisUpdate]
+                -·[GuildEmojisUpdate]
             """,
         ),
         Entry(
             "GuildIntegrations", shift = 4,
             kDoc = """
                 Enables the following events:
-                - [GuildIntegrationsUpdate]
-                - [IntegrationCreate]
-                - [IntegrationUpdate]
-                - [IntegrationDelete]
+                -·[GuildIntegrationsUpdate]
+                -·[IntegrationCreate]
+                -·[IntegrationUpdate]
+                -·[IntegrationDelete]
             """,
         ),
         Entry(
             "GuildWebhooks", shift = 5,
             kDoc = """
                 Enables the following events:
-                - [WebhooksUpdate]
+                -·[WebhooksUpdate]
             """,
         ),
         Entry(
             "GuildInvites", shift = 6,
             kDoc = """
                 Enables the following events:
-                - [InviteCreate]
-                - [InviteDelete]
+                -·[InviteCreate]
+                -·[InviteDelete]
             """,
         ),
         Entry(
             "GuildVoiceStates", shift = 7,
             kDoc = """
                 Enables the following events:
-                - [VoiceStateUpdate]
+                -·[VoiceStateUpdate]
             """,
         ),
         Entry(
             "GuildPresences", shift = 8, requiresOptInAnnotations = [privilegedIntentAnnotation],
             kDoc = """
                 Enables the following events:
-                - [PresenceUpdate]
+                -·[PresenceUpdate]
             """,
         ),
         Entry(
             "GuildMessages", shift = 9,
             kDoc = """
                 Enables the following events:
-                - [MessageCreate]
-                - [MessageUpdate]
-                - [MessageDelete]
-                - [MessageDeleteBulk]
+                -·[MessageCreate]
+                -·[MessageUpdate]
+                -·[MessageDelete]
+                -·[MessageDeleteBulk]
             """,
         ),
         Entry(
             "GuildMessageReactions", shift = 10,
             kDoc = """
                 Enables the following events:
-                - [MessageReactionAdd]
-                - [MessageReactionRemove]
-                - [MessageReactionRemoveAll]
-                - [MessageReactionRemoveEmoji]
+                -·[MessageReactionAdd]
+                -·[MessageReactionRemove]
+                -·[MessageReactionRemoveAll]
+                -·[MessageReactionRemoveEmoji]
             """,
         ),
         Entry(
             "GuildMessageTyping", shift = 11,
             kDoc = """
                 Enables the following events:
-                - [TypingStart]
+                -·[TypingStart]
             """,
         ),
         Entry(
             "DirectMessages", shift = 12,
             kDoc = """
                 Enables the following events:
-                - [MessageCreate]
-                - [MessageUpdate]
-                - [MessageDelete]
-                - [ChannelPinsUpdate]
+                -·[MessageCreate]
+                -·[MessageUpdate]
+                -·[MessageDelete]
+                -·[ChannelPinsUpdate]
             """,
         ),
         Entry(
             "DirectMessagesReactions", shift = 13,
             kDoc = """
                 Enables the following events:
-                - [MessageReactionAdd]
-                - [MessageReactionRemove]
-                - [MessageReactionRemoveAll]
-                - [MessageReactionRemoveEmoji]
+                -·[MessageReactionAdd]
+                -·[MessageReactionRemove]
+                -·[MessageReactionRemoveAll]
+                -·[MessageReactionRemoveEmoji]
             """,
         ),
         Entry(
             "DirectMessageTyping", shift = 14,
             kDoc = """
                 Enables the following events:
-                - [TypingStart]
+                -·[TypingStart]
             """,
         ),
         Entry(
             "MessageContent", shift = 15, requiresOptInAnnotations = [privilegedIntentAnnotation],
-            kDoc = "[MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly " +
+            kDoc = "[MessageContent] is a unique [privileged·intent][PrivilegedIntent] that isn't directly " +
                 "associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your app " +
                 "to receive message content data across the APIs.\n\nFor example, the [content][dev.kord.common." +
                 "entity.DiscordMessage.content], [embeds][dev.kord.common.entity.DiscordMessage.embeds], " +
                 "[attachments][dev.kord.common.entity.DiscordMessage.attachments], and [components][dev.kord.common." +
-                "entity.DiscordMessage.components] fields in [message objects][dev.kord.common.entity." +
+                "entity.DiscordMessage.components] fields in [message·objects][dev.kord.common.entity." +
                 "DiscordMessage] all contain message content and therefore require this intent.\n\nApps **without** " +
                 "this intent will receive empty values in fields that contain user-inputted content with a few " +
                 "exceptions:\n" +
-                "- Content in messages that an app sends\n" +
-                "- Content in DMs with the app\n" +
-                "- Content in which the app is mentioned\n" +
-                "- Content of the message a message context menu command is used on",
+                "-·Content in messages that an app sends\n" +
+                "-·Content in DMs with the app\n" +
+                "-·Content in which the app is mentioned\n" +
+                "-·Content of the message a message context menu command is used on",
         ),
         Entry(
             "GuildScheduledEvents", shift = 16,
             kDoc = """
                 Enables the following events:
-                - [GuildScheduledEventCreate]
-                - [GuildScheduledEventUpdate]
-                - [GuildScheduledEventDelete]
-                - [GuildScheduledEventUserAdd]
-                - [GuildScheduledEventUserRemove]
+                -·[GuildScheduledEventCreate]
+                -·[GuildScheduledEventUpdate]
+                -·[GuildScheduledEventDelete]
+                -·[GuildScheduledEventUserAdd]
+                -·[GuildScheduledEventUserRemove]
             """,
         ),
         Entry(
             "AutoModerationConfiguration", shift = 20,
             kDoc = """
                 Enables the following events:
-                - [AutoModerationRuleCreate]
-                - [AutoModerationRuleUpdate]
-                - [AutoModerationRuleDelete]
+                -·[AutoModerationRuleCreate]
+                -·[AutoModerationRuleUpdate]
+                -·[AutoModerationRuleDelete]
             """,
         ),
         Entry(
             "AutoModerationExecution", shift = 21,
             kDoc = """
                 Enables the following events:
-                - [AutoModerationActionExecution]
+                -·[AutoModerationActionExecution]
             """,
         ),
     ],

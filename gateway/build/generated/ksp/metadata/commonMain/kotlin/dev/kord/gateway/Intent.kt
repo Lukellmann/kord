@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.gateway
 
@@ -205,9 +204,9 @@ public sealed class Intent(
      * For example, the [content][dev.kord.common.entity.DiscordMessage.content],
      * [embeds][dev.kord.common.entity.DiscordMessage.embeds],
      * [attachments][dev.kord.common.entity.DiscordMessage.attachments], and
-     * [components][dev.kord.common.entity.DiscordMessage.components] fields in [message
-     * objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore
-     * require this intent.
+     * [components][dev.kord.common.entity.DiscordMessage.components] fields in
+     * [message objects][dev.kord.common.entity.DiscordMessage] all contain message content and
+     * therefore require this intent.
      *
      * Apps **without** this intent will receive empty values in fields that contain user-inputted
      * content with a few exceptions:
@@ -486,8 +485,7 @@ public class Intents internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): Intents =
-                Intents(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): Intents = Intents(decoder.decodeSerializableValue(delegate))
     }
 }
 

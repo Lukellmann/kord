@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class InteractionType(
 
     final override fun hashCode(): Int = type.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionType.Unknown(type=$type)"
+    final override fun toString(): String = if (this is Unknown) "InteractionType.Unknown(type=$type)"
             else "InteractionType.${this::class.simpleName}"
 
     /**

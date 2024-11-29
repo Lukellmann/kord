@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class GuildFeature(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildFeature.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "GuildFeature.Unknown(value=$value)"
             else "GuildFeature.${this::class.simpleName}"
 
     /**
@@ -55,8 +53,7 @@ public sealed class GuildFeature(
     /**
      * Guild is using the old permissions configuration behavior.
      */
-    public object ApplicationCommandPermissionsV2 :
-            GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
+    public object ApplicationCommandPermissionsV2 : GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
 
     /**
      * Guild has set up auto moderation rules.
@@ -147,8 +144,7 @@ public sealed class GuildFeature(
     /**
      * Guild has role subscriptions that can be purchased.
      */
-    public object RoleSubscriptionsAvailableForPurchase :
-            GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
+    public object RoleSubscriptionsAvailableForPurchase : GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
 
     /**
      * Guild has enabled role subscriptions.

@@ -15,14 +15,14 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()
         addAnnotation<Serializable> {
-            addMember("with·=·%T.Serializer::class", entityCN)
+            addMember("with = %T.Serializer::class", entityCN)
         }
         addModifiers(PUBLIC, SEALED)
         primaryConstructor {
             addParameter(valueName, valueCN)
         }
         addProperty(valueName, valueCN, PUBLIC) {
-            addKdoc("The raw $valueName used by Discord.")
+            addKdoc("The♢raw♢$valueName♢used♢by♢Discord.")
             initializer(valueName)
         }
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = valueName, isFinal = true)
@@ -34,16 +34,16 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addSharedCompanionObjectContent()
             addFunction("from") {
                 addKdoc(
-                    "Returns an instance of [%1T] with [%1T.$valueName] equal to the specified [$valueName].",
+                    "Returns♢an♢instance♢of♢[%1T]♢with♢[%1T.$valueName]♢equal♢to♢the♢specified♢[$valueName].",
                     entityCN,
                 )
                 addParameter(valueName, valueCN)
                 returns(entityCN)
-                withControlFlow("return when·($valueName)") {
+                withControlFlow("return when ($valueName)") {
                     for (entry in entriesDistinctByValue) {
-                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                        addStatement("$valueFormat -> ${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
-                    addStatement("else·->·Unknown($valueName)")
+                    addStatement("else -> Unknown($valueName)")
                 }
             }
         }

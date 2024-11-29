@@ -21,7 +21,7 @@ internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(
         addModifiers(*final, OVERRIDE)
         addParameter<Any?>("other")
         returns<Boolean>()
-        addStatement("return this·===·other || (other·is·%T·&&·this.$property·==·other.$property)", className)
+        addStatement("return this === other♢||♢(other is %T && this.$property == other.$property)", className)
     }
     addFunction("hashCode") {
         addModifiers(*final, OVERRIDE)
@@ -35,7 +35,7 @@ internal fun TypeSpec.Builder.addEntityToString(property: String) = addFunction(
     addModifiers(FINAL, OVERRIDE)
     returns<String>()
     addStatement(
-        "return if·(this·is·Unknown)·\"$entityName.Unknown($property=$$property)\" " +
-            "else·\"$entityName.\${this::class.simpleName}\""
+        "return if (this is Unknown) \"$entityName.Unknown($property=$$property)\"♢" +
+            "else \"$entityName.\${this::class.simpleName}\""
     )
 }

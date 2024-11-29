@@ -37,7 +37,7 @@ internal fun TypeSpec.Builder.addBuilder() = addClass(builderCN) {
     addUnaryMinus(receiver = collectionCN)
     addFunction("build") {
         addKdoc(
-            "Returns an instance of [%T] that has all bits set that are currently set in this [%T].",
+            "Returns♢an♢instance♢of♢[%T]♢that♢has♢all♢bits♢set♢that♢are♢currently♢set♢in♢this♢[%T].",
             collectionCN, builderCN,
         )
         addModifiers(PUBLIC)
@@ -56,12 +56,12 @@ private val BitFlags.builder
 
 context(BitFlags, GenerationContext)
 private fun TypeSpec.Builder.addUnaryPlus(receiver: ClassName) = addFunction("unaryPlus") {
-    addKdoc("Sets all bits in the [%T] that are set in this [%T].", builderCN, receiver)
+    addKdoc("Sets♢all♢bits♢in♢the♢[%T]♢that♢are♢set♢in♢this♢[%T].", builderCN, receiver)
     addModifiers(PUBLIC, OPERATOR)
     receiver(receiver)
     addStatement(
         when (valueType) {
-            INT -> "this@$builder.$valueName·=·this@$builder.$valueName·or·this.$valueName"
+            INT -> "this@$builder.$valueName = this@$builder.$valueName or this.$valueName"
             BIT_SET -> "this@$builder.$valueName.add(this.$valueName)"
         }
     )
@@ -69,12 +69,12 @@ private fun TypeSpec.Builder.addUnaryPlus(receiver: ClassName) = addFunction("un
 
 context(BitFlags, GenerationContext)
 private fun TypeSpec.Builder.addUnaryMinus(receiver: ClassName) = addFunction("unaryMinus") {
-    addKdoc("Unsets all bits in the [%T] that are set in this [%T].", builderCN, receiver)
+    addKdoc("Unsets♢all♢bits♢in♢the♢[%T]♢that♢are♢set♢in♢this♢[%T].", builderCN, receiver)
     addModifiers(PUBLIC, OPERATOR)
     receiver(receiver)
     addStatement(
         when (valueType) {
-            INT -> "this@$builder.$valueName·=·this@$builder.$valueName·and·this.$valueName.inv()"
+            INT -> "this@$builder.$valueName = this@$builder.$valueName and this.$valueName.inv()"
             BIT_SET -> "this@$builder.$valueName.remove(this.$valueName)"
         }
     )

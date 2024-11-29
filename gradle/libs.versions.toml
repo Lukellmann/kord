@@ -2,33 +2,33 @@
 
 # api dependencies
 kotlin = "2.0.21" # https://github.com/JetBrains/kotlin
-ktor = "3.0.0" # https://github.com/ktorio/ktor
+ktor = "3.0.1" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.7.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime
-kord-cache = "0.5.4" # https://github.com/kordlib/cache
+kord-cache = "0.5.6" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.16" # https://www.slf4j.org
-kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "22.5.5-pre.832" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "2.0.21-1.0.25" # https://github.com/google/ksp
-kotlinpoet = "1.18.1" # https://github.com/square/kotlinpoet
+ksp = "2.0.21-1.0.28" # https://github.com/google/ksp
+kotlinpoet = "2.0.0" # https://github.com/square/kotlinpoet
 
 # tests
-junit-jupiter = "5.11.2" # https://github.com/junit-team/junit5
-junit-platform = "1.11.2"
+junit-jupiter = "5.11.3" # https://github.com/junit-team/junit5
+junit-platform = "1.11.3"
 mockk = "1.13.13" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
 dokka = "2.0.0-Beta" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
+kotlinx-atomicfu = "0.26.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.16.3" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.5.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 

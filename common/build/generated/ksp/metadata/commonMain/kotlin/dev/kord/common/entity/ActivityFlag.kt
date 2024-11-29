@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -41,23 +40,20 @@ public sealed class ActivityFlag(
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value)
+    public operator fun plus(flag: ActivityFlag): ActivityFlags = ActivityFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value)
+    public operator fun plus(flags: ActivityFlags): ActivityFlags = ActivityFlags(this.value or flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ActivityFlag.Unknown(shift=$shift)"
+    final override fun toString(): String = if (this is Unknown) "ActivityFlag.Unknown(shift=$shift)"
             else "ActivityFlag.${this::class.simpleName}"
 
     /**
@@ -214,42 +210,36 @@ public class ActivityFlags internal constructor(
     /**
      * Checks if this instance of [ActivityFlags] has all bits set that are set in [flag].
      */
-    public operator fun contains(flag: ActivityFlag): Boolean =
-            this.value and flag.value == flag.value
+    public operator fun contains(flag: ActivityFlag): Boolean = this.value and flag.value == flag.value
 
     /**
      * Checks if this instance of [ActivityFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: ActivityFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: ActivityFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value)
+    public operator fun plus(flag: ActivityFlag): ActivityFlags = ActivityFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value)
+    public operator fun plus(flags: ActivityFlags): ActivityFlags = ActivityFlags(this.value or flags.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
-    public operator fun minus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: ActivityFlag): ActivityFlags = ActivityFlags(this.value and flag.value.inv())
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
-    public operator fun minus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: ActivityFlags): ActivityFlags = ActivityFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [ActivityFlags] modified with [builder].
@@ -314,8 +304,7 @@ public class ActivityFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ActivityFlags =
-                ActivityFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): ActivityFlags = ActivityFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

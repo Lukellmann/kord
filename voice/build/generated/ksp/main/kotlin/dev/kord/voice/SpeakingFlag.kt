@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.voice
 
@@ -41,23 +40,20 @@ public sealed class SpeakingFlag(
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.code or flag.code)
+    public operator fun plus(flag: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.code or flags.code)
+    public operator fun plus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SpeakingFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "SpeakingFlag.Unknown(shift=$shift)"
+    final override fun toString(): String = if (this is Unknown) "SpeakingFlag.Unknown(shift=$shift)"
             else "SpeakingFlag.${this::class.simpleName}"
 
     /**
@@ -204,36 +200,31 @@ public class SpeakingFlags internal constructor(
     /**
      * Checks if this instance of [SpeakingFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: SpeakingFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: SpeakingFlags): Boolean = this.code and flags.code == flags.code
 
     /**
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.code or flag.code)
+    public operator fun plus(flag: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.code or flags.code)
+    public operator fun plus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
-    public operator fun minus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
-    public operator fun minus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [SpeakingFlags] modified with [builder].
@@ -298,8 +289,7 @@ public class SpeakingFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): SpeakingFlags =
-                SpeakingFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): SpeakingFlags = SpeakingFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

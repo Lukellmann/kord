@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -47,8 +46,7 @@ public sealed class MessageFlag(
      * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code or flags.code)
+    public operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is MessageFlag && this.shift == other.shift)
@@ -257,8 +255,7 @@ public class MessageFlags internal constructor(
     /**
      * Checks if this instance of [MessageFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: MessageFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: MessageFlags): Boolean = this.code and flags.code == flags.code
 
     /**
      * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
@@ -270,22 +267,19 @@ public class MessageFlags internal constructor(
      * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code or flags.code)
+    public operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flag].
      */
-    public operator fun minus(flag: MessageFlag): MessageFlags =
-            MessageFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: MessageFlag): MessageFlags = MessageFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: MessageFlags): MessageFlags = MessageFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [MessageFlags] modified with [builder].
@@ -350,8 +344,7 @@ public class MessageFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): MessageFlags =
-                MessageFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): MessageFlags = MessageFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

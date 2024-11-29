@@ -34,7 +34,7 @@ internal fun GenerationEntity.fileSpecForGenerationEntity(
 
     return FileSpec(packageName, fileName = entityName) {
         indent("    ")
-        addFileComment("THIS FILE IS AUTO-GENERATED, DO NOT EDIT!")
+        addFileComment("THIS♢FILE♢IS♢AUTO-GENERATED,♢DO♢NOT♢EDIT!")
         addKotlinDefaultImports(includeJvm = false, includeJs = false)
         @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Suppress`
         addAnnotation(

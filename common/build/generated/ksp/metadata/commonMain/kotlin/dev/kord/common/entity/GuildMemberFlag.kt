@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -41,23 +40,20 @@ public sealed class GuildMemberFlag(
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code)
+    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code)
+    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags = GuildMemberFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildMemberFlag.Unknown(shift=$shift)"
+    final override fun toString(): String = if (this is Unknown) "GuildMemberFlag.Unknown(shift=$shift)"
             else "GuildMemberFlag.${this::class.simpleName}"
 
     /**
@@ -206,42 +202,36 @@ public class GuildMemberFlags internal constructor(
     /**
      * Checks if this instance of [GuildMemberFlags] has all bits set that are set in [flag].
      */
-    public operator fun contains(flag: GuildMemberFlag): Boolean =
-            this.code and flag.code == flag.code
+    public operator fun contains(flag: GuildMemberFlag): Boolean = this.code and flag.code == flag.code
 
     /**
      * Checks if this instance of [GuildMemberFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: GuildMemberFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: GuildMemberFlags): Boolean = this.code and flags.code == flags.code
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code)
+    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code)
+    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags = GuildMemberFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
-    public operator fun minus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
-    public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags = GuildMemberFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [GuildMemberFlags] modified with [builder].
@@ -307,16 +297,14 @@ public class GuildMemberFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): GuildMemberFlags =
-                GuildMemberFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): GuildMemberFlags = GuildMemberFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 
 /**
  * Returns an instance of [GuildMemberFlags] built with [GuildMemberFlags.Builder].
  */
-public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit = {}):
-        GuildMemberFlags {
+public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit = {}): GuildMemberFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildMemberFlags.Builder().apply(builder).build()
 }
@@ -350,7 +338,6 @@ public fun GuildMemberFlags(flags: Iterable<GuildMemberFlag>): GuildMemberFlags 
  * [flags].
  */
 @JvmName("GuildMemberFlags0")
-public fun GuildMemberFlags(flags: Iterable<GuildMemberFlags>): GuildMemberFlags =
-        GuildMemberFlags {
+public fun GuildMemberFlags(flags: Iterable<GuildMemberFlags>): GuildMemberFlags = GuildMemberFlags {
     flags.forEach { +it }
 }

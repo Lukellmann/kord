@@ -6,9 +6,6 @@ repositories {
     mavenCentral()
 }
 
-group = Library.group
-version = libraryVersion
-
 dependencies {
     dokka(projects.common)
     dokka(projects.core)

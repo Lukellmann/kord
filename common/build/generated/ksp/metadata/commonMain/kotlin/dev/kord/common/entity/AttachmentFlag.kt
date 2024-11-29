@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -41,23 +40,20 @@ public sealed class AttachmentFlag(
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value or flag.value)
+    public operator fun plus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value or flags.value)
+    public operator fun plus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value or flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is AttachmentFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AttachmentFlag.Unknown(shift=$shift)"
+    final override fun toString(): String = if (this is Unknown) "AttachmentFlag.Unknown(shift=$shift)"
             else "AttachmentFlag.${this::class.simpleName}"
 
     /**
@@ -185,42 +181,36 @@ public class AttachmentFlags internal constructor(
     /**
      * Checks if this instance of [AttachmentFlags] has all bits set that are set in [flag].
      */
-    public operator fun contains(flag: AttachmentFlag): Boolean =
-            this.value and flag.value == flag.value
+    public operator fun contains(flag: AttachmentFlag): Boolean = this.value and flag.value == flag.value
 
     /**
      * Checks if this instance of [AttachmentFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: AttachmentFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: AttachmentFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value or flag.value)
+    public operator fun plus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value or flags.value)
+    public operator fun plus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value or flags.value)
 
     /**
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
-    public operator fun minus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value and flag.value.inv())
 
     /**
      * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
-    public operator fun minus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [AttachmentFlags] modified with [builder].
@@ -286,16 +276,14 @@ public class AttachmentFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AttachmentFlags =
-                AttachmentFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): AttachmentFlags = AttachmentFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 
 /**
  * Returns an instance of [AttachmentFlags] built with [AttachmentFlags.Builder].
  */
-public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = {}):
-        AttachmentFlags {
+public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = {}): AttachmentFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return AttachmentFlags.Builder().apply(builder).build()
 }

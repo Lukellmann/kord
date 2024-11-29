@@ -23,7 +23,9 @@ internal fun DokkaExtension.applyKordDokkaOptions(project: Project) {
 
         sourceLink {
             localDirectory = project.projectDir
-            remoteUrl("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}")
+            remoteUrl(project.commitHash.map { commitHash ->
+                "https://github.com/kordlib/kord/blob/$commitHash/${project.name}"
+            })
             remoteLineSuffix = "#L"
         }
 

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -42,23 +41,20 @@ public sealed class SystemChannelFlag(
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code)
+    public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags = SystemChannelFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags = SystemChannelFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SystemChannelFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "SystemChannelFlag.Unknown(shift=$shift)"
+    final override fun toString(): String = if (this is Unknown) "SystemChannelFlag.Unknown(shift=$shift)"
             else "SystemChannelFlag.${this::class.simpleName}"
 
     /**
@@ -221,42 +217,36 @@ public class SystemChannelFlags internal constructor(
     /**
      * Checks if this instance of [SystemChannelFlags] has all bits set that are set in [flag].
      */
-    public operator fun contains(flag: SystemChannelFlag): Boolean =
-            this.code and flag.code == flag.code
+    public operator fun contains(flag: SystemChannelFlag): Boolean = this.code and flag.code == flag.code
 
     /**
      * Checks if this instance of [SystemChannelFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: SystemChannelFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: SystemChannelFlags): Boolean = this.code and flags.code == flags.code
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flag].
      */
-    public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code)
+    public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags = SystemChannelFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags = SystemChannelFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flag].
      */
-    public operator fun minus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: SystemChannelFlag): SystemChannelFlags = SystemChannelFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flags].
      */
-    public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags = SystemChannelFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [SystemChannelFlags] modified with [builder].
@@ -322,8 +312,7 @@ public class SystemChannelFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): SystemChannelFlags =
-                SystemChannelFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): SystemChannelFlags = SystemChannelFlags(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {
@@ -331,8 +320,7 @@ public class SystemChannelFlags internal constructor(
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
-                        arrayOf("dev.kord.common.entity.SystemChannelFlags")),
+            replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports = arrayOf("dev.kord.common.entity.SystemChannelFlags")),
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
@@ -341,8 +329,7 @@ public class SystemChannelFlags internal constructor(
     @Deprecated(
         level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
-                    arrayOf("dev.kord.common.entity.SystemChannelFlags")),
+        replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports = arrayOf("dev.kord.common.entity.SystemChannelFlags")),
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<SystemChannelFlags> = SystemChannelFlags.serializer()
@@ -352,8 +339,7 @@ public class SystemChannelFlags internal constructor(
 /**
  * Returns an instance of [SystemChannelFlags] built with [SystemChannelFlags.Builder].
  */
-public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> Unit = {}):
-        SystemChannelFlags {
+public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> Unit = {}): SystemChannelFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return SystemChannelFlags.Builder().apply(builder).build()
 }
@@ -362,8 +348,7 @@ public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> U
  * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
  * [flags].
  */
-public fun SystemChannelFlags(vararg flags: SystemChannelFlag): SystemChannelFlags =
-        SystemChannelFlags {
+public fun SystemChannelFlags(vararg flags: SystemChannelFlag): SystemChannelFlags = SystemChannelFlags {
     flags.forEach { +it }
 }
 
@@ -371,8 +356,7 @@ public fun SystemChannelFlags(vararg flags: SystemChannelFlag): SystemChannelFla
  * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
  * [flags].
  */
-public fun SystemChannelFlags(vararg flags: SystemChannelFlags): SystemChannelFlags =
-        SystemChannelFlags {
+public fun SystemChannelFlags(vararg flags: SystemChannelFlags): SystemChannelFlags = SystemChannelFlags {
     flags.forEach { +it }
 }
 
@@ -380,8 +364,7 @@ public fun SystemChannelFlags(vararg flags: SystemChannelFlags): SystemChannelFl
  * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
  * [flags].
  */
-public fun SystemChannelFlags(flags: Iterable<SystemChannelFlag>): SystemChannelFlags =
-        SystemChannelFlags {
+public fun SystemChannelFlags(flags: Iterable<SystemChannelFlag>): SystemChannelFlags = SystemChannelFlags {
     flags.forEach { +it }
 }
 
@@ -390,7 +373,6 @@ public fun SystemChannelFlags(flags: Iterable<SystemChannelFlag>): SystemChannel
  * [flags].
  */
 @JvmName("SystemChannelFlags0")
-public fun SystemChannelFlags(flags: Iterable<SystemChannelFlags>): SystemChannelFlags =
-        SystemChannelFlags {
+public fun SystemChannelFlags(flags: Iterable<SystemChannelFlags>): SystemChannelFlags = SystemChannelFlags {
     flags.forEach { +it }
 }

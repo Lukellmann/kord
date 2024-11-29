@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -302,8 +301,7 @@ public class UserFlags internal constructor(
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: UserFlags): UserFlags =
-            UserFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: UserFlags): UserFlags = UserFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [UserFlags] modified with [builder].
@@ -377,8 +375,7 @@ public class UserFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): UserFlags =
-                UserFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): UserFlags = UserFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

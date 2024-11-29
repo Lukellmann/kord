@@ -13,7 +13,7 @@ private val GenerationEntity.entityNamePluralSuffix get() = if (entityName.endsW
 
 context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityKDoc() {
-    val docLink = "See [%T]$entityNamePluralSuffix in the [Discord·Developer·Documentation]($docUrl)."
+    val docLink = "See♢[%T]$entityNamePluralSuffix♢in♢the♢[Discord Developer Documentation]($docUrl)."
     val combinedKDocFormat = if (kDoc != null) "$kDoc\n\n$docLink" else docLink
     addKdoc(combinedKDocFormat, entityCN)
 }
@@ -22,8 +22,8 @@ context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addUnknownClass(constructorParameterName: String, constructorParameterType: TypeName) =
     addClass("Unknown") {
         addKdoc(
-            "An unknown [%1T].\n\nThis is used as a fallback for [%1T]$entityNamePluralSuffix that haven't been " +
-                "added to Kord yet.",
+            "An♢unknown♢[%1T].\n\nThis♢is♢used♢as♢a♢fallback♢for♢[%1T]$entityNamePluralSuffix♢that♢haven't♢been♢" +
+                "added♢to♢Kord♢yet.",
             entityCN,
         )
         addModifiers(PUBLIC)
@@ -58,7 +58,7 @@ internal fun TypeSpec.Builder.addSharedSerializerContent(serializedClass: ClassN
     addSuperinterface(K_SERIALIZER.parameterizedBy(serializedClass))
     addProperty<SerialDescriptor>("descriptor", OVERRIDE) {
         initializer(
-            "%M(%S, %T)",
+            "%M(%S,♢%T)",
             PRIMITIVE_SERIAL_DESCRIPTOR,
             serializedClass.canonicalName,
             valueType.toPrimitiveKind(),
@@ -70,10 +70,10 @@ context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addSharedCompanionObjectContent() {
     addModifiers(PUBLIC)
     addProperty("entries", LIST.parameterizedBy(entityCN), PUBLIC) {
-        addKdoc("A [List] of all known [%T]$entityNamePluralSuffix.", entityCN)
+        addKdoc("A♢[List]♢of♢all♢known♢[%T]$entityNamePluralSuffix.", entityCN)
         addEntryOptIns()
         delegate {
-            withControlFlow("lazy(mode·=·%M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {
+            withControlFlow("lazy(mode = %M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {
                 addStatement("listOf(")
                 withIndent {
                     for (entry in entriesDistinctByValue) {

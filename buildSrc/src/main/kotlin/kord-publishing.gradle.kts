@@ -20,7 +20,7 @@ publishing {
 
             groupId = Library.group
             artifactId = "kord-$artifactId"
-            version = libraryVersion
+            version = libraryVersion.get()
 
             pom {
                 name = Library.name
@@ -61,7 +61,7 @@ publishing {
 
     repositories {
         maven {
-            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
+            setUrl(isRelease.map { if (it) Repo.releasesUrl else Repo.snapshotsUrl })
 
             credentials {
                 username = getenv("NEXUS_USER")
@@ -69,7 +69,7 @@ publishing {
             }
         }
 
-        if (!isRelease) {
+        if (!isRelease.get()) {
             maven {
                 name = "kordSnapshots"
                 url = uri("https://repo.kord.dev/snapshots")

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -182,8 +181,7 @@ public class RoleFlags internal constructor(
     /**
      * Checks if this instance of [RoleFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: RoleFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: RoleFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [RoleFlags] that has all bits set that are set in `this` and [flag].
@@ -199,15 +197,13 @@ public class RoleFlags internal constructor(
      * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flag].
      */
-    public operator fun minus(flag: RoleFlag): RoleFlags =
-            RoleFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: RoleFlag): RoleFlags = RoleFlags(this.value and flag.value.inv())
 
     /**
      * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: RoleFlags): RoleFlags =
-            RoleFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: RoleFlags): RoleFlags = RoleFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [RoleFlags] modified with [builder].
@@ -272,8 +268,7 @@ public class RoleFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): RoleFlags =
-                RoleFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): RoleFlags = RoleFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

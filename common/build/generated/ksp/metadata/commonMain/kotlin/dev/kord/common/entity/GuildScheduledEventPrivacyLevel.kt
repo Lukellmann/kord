@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildScheduledEventPrivacyLevel.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "GuildScheduledEventPrivacyLevel.Unknown(value=$value)"
             else "GuildScheduledEventPrivacyLevel.${this::class.simpleName}"
 
     /**
@@ -57,8 +55,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel = from(decoder.decodeInt())
     }
 
     public companion object {

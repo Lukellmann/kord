@@ -22,14 +22,14 @@ private val BitFlags.factoryFunctionName
 context(BitFlags, GenerationContext)
 internal fun FileSpec.Builder.addFactoryFunctions() {
     addFunction(factoryFunctionName) {
-        addKdoc("Returns an instance of [%T] built with [%T].", collectionCN, builderCN)
+        addKdoc("Returns♢an♢instance♢of♢[%T]♢built♢with♢[%T].", collectionCN, builderCN)
         addModifiers(PUBLIC, INLINE)
         addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT)) {
             defaultValue("{}")
         }
         returns(collectionCN)
-        addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
-        addStatement("return·%T().apply(builder).build()", builderCN)
+        addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)
+        addStatement("return %T().apply(builder).build()", builderCN)
     }
     // TODO remove eventually
     if (hadBuilderFactoryFunction0) {
@@ -47,8 +47,8 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
                 defaultValue("{}")
             }
             returns(collectionCN)
-            addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
-            addStatement("return·$factoryFunctionName(builder)", builderCN)
+            addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)
+            addStatement("return $factoryFunctionName(builder)", builderCN)
         }
     }
     addFactoryFunctionForIterable(baseParameterType = entityCN, IterableType.VARARG)
@@ -66,7 +66,7 @@ private fun FileSpec.Builder.addFactoryFunctionForIterable(
     jvmName: Boolean = false,
 ) = addFunction(factoryFunctionName) {
     addKdoc(
-        "Returns an instance of [%T] that has all bits set that are set in any element of [flags].",
+        "Returns♢an♢instance♢of♢[%T]♢that♢has♢all♢bits♢set♢that♢are♢set♢in♢any♢element♢of♢[flags].",
         collectionCN,
     )
     if (jvmName) jvmName(factoryFunctionName + '0')
@@ -77,6 +77,6 @@ private fun FileSpec.Builder.addFactoryFunctionForIterable(
     }
     returns(collectionCN)
     withControlFlow("return $factoryFunctionName") {
-        addStatement("flags.forEach·{·+it·}")
+        addStatement("flags.forEach { +it }")
     }
 }

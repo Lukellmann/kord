@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class InteractionResponseType(
 
     final override fun hashCode(): Int = type.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionResponseType.Unknown(type=$type)"
+    final override fun toString(): String = if (this is Unknown) "InteractionResponseType.Unknown(type=$type)"
             else "InteractionResponseType.${this::class.simpleName}"
 
     /**
@@ -88,8 +86,7 @@ public sealed class InteractionResponseType(
             encoder.encodeInt(value.type)
         }
 
-        override fun deserialize(decoder: Decoder): InteractionResponseType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): InteractionResponseType = from(decoder.decodeInt())
     }
 
     public companion object {

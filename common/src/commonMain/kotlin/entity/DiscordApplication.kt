@@ -8,7 +8,7 @@
         ),
         Entry(
             "GatewayPresence", shift = 12,
-            kDoc = "Intent required for bots in **100 or more servers** to receive `PresenceUpdate` events.",
+            kDoc = "Intent required for bots in **100·or·more·servers** to receive `PresenceUpdate` events.",
         ),
         Entry(
             "GatewayPresenceLimited", shift = 13,
@@ -17,7 +17,7 @@
         ),
         Entry(
             "GatewayGuildMembers", shift = 14,
-            kDoc = "Intent required for bots in **100 or more servers** to receive member-related events like " +
+            kDoc = "Intent required for bots in **100·or·more·servers** to receive member-related events like " +
                 "`GuildMemberAdd`.\n\nSee the list of member-related events " +
                 "[under·`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).",
         ),
@@ -38,7 +38,7 @@
         ),
         Entry(
             "GatewayMessageContent", shift = 18,
-            kDoc = "Intent required for bots in **100 or more servers** to receive " +
+            kDoc = "Intent required for bots in **100·or·more·servers** to receive " +
                 "[message·content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).",
         ),
         Entry(

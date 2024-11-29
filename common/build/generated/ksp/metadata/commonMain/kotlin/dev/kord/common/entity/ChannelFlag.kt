@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -47,8 +46,7 @@ public sealed class ChannelFlag(
      * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ChannelFlag && this.shift == other.shift)
@@ -204,8 +202,7 @@ public class ChannelFlags internal constructor(
     /**
      * Checks if this instance of [ChannelFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: ChannelFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: ChannelFlags): Boolean = this.code and flags.code == flags.code
 
     /**
      * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
@@ -217,22 +214,19 @@ public class ChannelFlags internal constructor(
      * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flag].
      */
-    public operator fun minus(flag: ChannelFlag): ChannelFlags =
-            ChannelFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [ChannelFlags] modified with [builder].
@@ -297,8 +291,7 @@ public class ChannelFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): ChannelFlags =
-                ChannelFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): ChannelFlags = ChannelFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

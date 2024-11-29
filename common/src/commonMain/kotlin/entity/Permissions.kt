@@ -56,7 +56,7 @@
         Entry(
             "RequestToSpeak", shift = 32,
             kDoc = "Allows for requesting to speak in stage channels.\n\n" +
-                "_This permission is under active development and may be changed or removed._",
+                "_This·permission·is·under·active·development·and·may·be·changed·or·removed._",
         ),
         Entry(
             "ManageEvents", shift = 33,

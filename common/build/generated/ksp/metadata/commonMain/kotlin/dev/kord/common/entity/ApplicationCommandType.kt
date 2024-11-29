@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,8 +28,7 @@ public sealed class ApplicationCommandType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ApplicationCommandType.Unknown(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ApplicationCommandType.Unknown(value=$value)"
             else "ApplicationCommandType.${this::class.simpleName}"
 
     /**
@@ -66,8 +64,7 @@ public sealed class ApplicationCommandType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ApplicationCommandType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): ApplicationCommandType = from(decoder.decodeInt())
     }
 
     public companion object {

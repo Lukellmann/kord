@@ -49,7 +49,10 @@ internal sealed class GenerationEntity(
     )
 }
 
-private fun String.toKDoc() = trimIndent().ifBlank { null }
+private fun String.toKDoc() = trimIndent()
+    .replace(' ', '♢')
+    .replace('·', ' ')
+    .ifBlank { null }
 
 /**
  * Maps [Generate] to [GenerationEntity].

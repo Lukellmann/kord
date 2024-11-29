@@ -1,33 +1,32 @@
 import org.gradle.api.Project
+import org.gradle.api.provider.Provider
 
 object Library {
     const val name = "kord"
-    const val group = "dev.kord"
-    const val description = "Idiomatic Kotlin Wrapper for The Discord API"
-    const val projectUrl = "https://github.com/kordlib/kord"
+    internal const val group = "dev.kord"
+    internal const val description = "Idiomatic Kotlin Wrapper for The Discord API"
+    internal const val projectUrl = "https://github.com/kordlib/kord"
 }
 
-private val Project.tag
+private val Project.tag: Provider<String>
     get() = git("tag", "--no-column", "--points-at", "HEAD")
-        .takeIf { it.isNotBlank() }
-        ?.lines()
-        ?.single()
+        .map { tags -> tags.takeIf { it.isNotBlank() }?.lines()?.single() }
 
-val Project.libraryVersion
-    get() = tag ?: run {
-        val snapshotPrefix = when (val branch = git("branch", "--show-current")) {
-            "main" -> providers.gradleProperty("nextPlannedVersion").get()
-            else -> branch.replace('/', '-')
+val Project.libraryVersion: Provider<String>
+    get() = tag.orElse(git("branch", "--show-current").flatMap { branch ->
+        val snapshotPrefix = when (branch) {
+            "main" -> providers.gradleProperty("nextPlannedVersion")
+            else -> providers.provider { branch.replace('/', '-') }
         }
-        "$snapshotPrefix-SNAPSHOT"
-    }
+        snapshotPrefix.map { "$it-SNAPSHOT" }
+    })
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
 
-val Project.isRelease get() = tag != null
+internal val Project.isRelease get() = tag.map { true }.orElse(false)
 
-object Repo {
+internal object Repo {
     const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
     const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 }
