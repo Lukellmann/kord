@@ -25,7 +25,10 @@ internal const val KORD_JVM_TARGET = 8
 internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
     applyKordCommonCompilerOptions()
     jvmTarget = JVM_1_8
-    freeCompilerArgs.add("-Xjdk-release=1.8")
+    freeCompilerArgs.addAll(
+        "-Xjdk-release=1.8",
+        "-Xjvm-default=all-compatibility",
+    )
 }
 
 internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {
